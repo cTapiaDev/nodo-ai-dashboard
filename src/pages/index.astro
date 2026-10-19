@@ -1,16 +1,14 @@
 ---
+/* 🟢 Página Principal: Dashboard Neomórfico del Curso */
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import SidebarNav from '../components/SidebarNav.astro';
+import ClassView from '../components/ClassView.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<DashboardLayout title="NODO IA // Dashboard de Prompts y Casos de Trabajo">
+  <!-- Inyectar el menú lateral en el slot del Layout -->
+  <SidebarNav slot="sidebar-nav" />
+
+  <!-- Renderizar la vista principal de la Clase 1 por defecto -->
+  <ClassView initialClassNumber="Clase 01" />
+</DashboardLayout>

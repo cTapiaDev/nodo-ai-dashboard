@@ -1,0 +1,63 @@
+/* 🟢 Estilos y Colores con Verde Institucional #607931 */
+@layer utilities {
+    :root {
+        --neu-surface: #f4f6f8;
+        --neu-raised-light: #ffffff;
+        --neu-raised-dark: #d1d9e6;
+        --neu-inset-light: #d1d9e6;
+        --neu-inset-dark: #ffffff;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --sidebar-bg: #607931;
+        --sidebar-text: #ffffff;
+        --sidebar-muted: #d5e1c4;
+        --sidebar-hover: #526829;
+    }
+
+    .dark {
+        --neu-surface: #121212;
+        --neu-raised-light: #1f1f1f;
+        --neu-raised-dark: #080808;
+        --neu-inset-light: #080808;
+        --neu-inset-dark: #1f1f1f;
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+        --sidebar-bg: #1a1a1a;
+        --sidebar-text: #ffffff;
+        --sidebar-muted: #a3a3a3;
+        --sidebar-hover: #262626;
+    }
+
+    .bg-chassis {
+        background-color: var(--neu-surface);
+        color: var(--text-main);
+    }
+
+    .neu-raised {
+        background-color: var(--neu-surface);
+        box-shadow:
+            4px 4px 8px var(--neu-raised-dark),
+            -4px -4px 8px var(--neu-raised-light);
+    }
+
+    .neu-pressed {
+        background-color: var(--neu-surface);
+        box-shadow:
+            inset 3px 3px 6px var(--neu-raised-dark),
+            inset -3px -3px 6px var(--neu-raised-light);
+    }
+
+    .neu-inset {
+        background-color: var(--neu-surface);
+        box-shadow:
+            inset 3px 3px 6px var(--neu-inset-light),
+            inset -3px -3px 6px var(--neu-raised-dark);
+    }
+
+    .neu-badge {
+        background-color: var(--neu-surface);
+        box-shadow:
+            2px 2px 4px var(--neu-raised-dark),
+            -2px -2px 4px var(--neu-raised-light);
+    }
+}

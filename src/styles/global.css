@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/plus-jakarta-sans/400.css';
+@import '@fontsource/plus-jakarta-sans/600.css';
+@import '@fontsource/plus-jakarta-sans/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/600.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --color-chassis-light: #e3e7ee;
+    --color-chassis-dark: #1e2126;
+
+    --color-accent-orange: #ff4f17;
+    --color-accent-emerald: #10b981;
+    --color-accent-amber: #f59e0b;
+}

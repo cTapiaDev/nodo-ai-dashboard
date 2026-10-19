@@ -1,0 +1,101 @@
+---
+/* 🟢 Sidebar con tipografías legibles (Mínimo 14px) */
+import { courseData } from '../data/curso';
+
+const units = courseData || [];
+---
+
+<nav class="mt-4 flex-1 overflow-y-auto pr-1 flex flex-col gap-3 w-full" aria-label="Navegación del Curso">
+  {units.length > 0 ? (
+    units.map((unit, unitIdx) => (
+      <div class="flex flex-col w-full rounded-xl overflow-hidden mb-2" style="background-color: #556a2c; box-shadow: inset 2px 2px 5px #485b24, inset -2px -2px 5px #627934;">
+        <!-- Botón Acordeón de la Unidad -->
+        <button 
+          type="button"
+          class="unit-accordion-btn w-full px-4 py-3 text-left flex items-center justify-between font-display font-bold text-sm uppercase tracking-wider text-white transition-colors cursor-pointer"
+        >
+          <span class="pr-2 pointer-events-none">{unit.unitTitle}</span>
+          <svg class="accordion-icon w-5 h-5 transform transition-transform duration-200 shrink-0 rotate-180 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <!-- Lista de Clases Desplegable -->
+        <div class="unit-classes-container flex flex-col w-full p-2 gap-2">
+          {unit.classes && unit.classes.map((cls, index) => {
+            const isFirst = unitIdx === 0 && index === 0;
+            return (
+              <button
+                type="button"
+                class={`class-nav-btn w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center justify-between gap-2 cursor-pointer ${
+                  isFirst ? 'active-class-btn font-semibold text-white' : 'normal-class-btn text-white/90 hover:text-white'
+                }`}
+                style={isFirst ? 'background-color: #485b24; box-shadow: inset 2px 2px 4px #3b4b1d, inset -2px -2px 4px #556a2b;' : 'background-color: #607931; box-shadow: 2px 2px 5px #4d6027, -2px -2px 5px #73923b;'}
+                data-class-id={cls.classNumber}
+                data-class-title={cls.title}
+                data-unit-title={unit.unitTitle}
+              >
+                <div class="flex flex-col gap-1 w-full pointer-events-none">
+                  <span class="text-xs font-mono uppercase tracking-widest text-white/80 block">{cls.classNumber}</span>
+                  <span class="text-sm font-sans leading-snug whitespace-normal block">{cls.title}</span>
+                </div>
+                <span class={`dot-indicator w-2.5 h-2.5 rounded-full shrink-0 transition-colors pointer-events-none ${isFirst ? 'bg-white shadow-[0_0_6px_#ffffff]' : 'bg-transparent'}`}></span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    ))
+  ) : (
+    <p class="text-sm px-2 text-white/70">No hay unidades cargadas.</p>
+  )}
+</nav>
+
+<script>
+  const accordionBtns = document.querySelectorAll('.unit-accordion-btn');
+  accordionBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const container = btn.nextElementSibling as HTMLElement;
+      const icon = btn.querySelector('.accordion-icon');
+      if (container) {
+        container.classList.toggle('hidden');
+        icon?.classList.toggle('rotate-180');
+      }
+    });
+  });
+
+  const navButtons = document.querySelectorAll('.class-nav-btn');
+  const breadcrumbEl = document.getElementById('current-breadcrumb');
+  const titleEl = document.getElementById('current-title');
+
+  navButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      navButtons.forEach(btn => {
+        btn.className = "class-nav-btn normal-class-btn w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center justify-between gap-2 cursor-pointer text-white/90 hover:text-white";
+        (btn as HTMLElement).style.backgroundColor = '#607931';
+        (btn as HTMLElement).style.boxShadow = '2px 2px 5px #4d6027, -2px -2px 5px #73923b';
+        const dot = btn.querySelector('.dot-indicator') as HTMLElement;
+        if (dot) dot.style.backgroundColor = 'transparent';
+        if (dot) dot.style.boxShadow = 'none';
+      });
+
+      button.className = "class-nav-btn active-class-btn w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center justify-between gap-2 cursor-pointer font-semibold text-white";
+      (button as HTMLElement).style.backgroundColor = '#485b24';
+      (button as HTMLElement).style.boxShadow = 'inset 2px 2px 4px #3b4b1d, inset -2px -2px 4px #556a2b';
+      const activeDot = button.querySelector('.dot-indicator') as HTMLElement;
+      if (activeDot) {
+        activeDot.style.backgroundColor = '#ffffff';
+        activeDot.style.boxShadow = '0 0 6px #ffffff';
+      }
+
+      const classNum = button.getAttribute('data-class-id');
+      const classTitle = button.getAttribute('data-class-title');
+      const unitTitle = button.getAttribute('data-unit-title');
+
+      if (breadcrumbEl) breadcrumbEl.textContent = unitTitle || '';
+      if (titleEl) titleEl.textContent = `${classNum}: ${classTitle}`;
+
+      window.dispatchEvent(new CustomEvent('change-class', { detail: { classNum } }));
+    });
+  });
+</script>
