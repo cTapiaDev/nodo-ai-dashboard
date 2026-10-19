@@ -17,21 +17,16 @@ jobs:
             - name: Descargar el repositorio
               uses: actions/checkout@v4
 
-            - name: Instalar pnpm
-              uses: pnpm/action-setup@v3
-              with:
-                  version: 9
-
             - name: Configurar Node.js
               uses: actions/setup-node@v4
               with:
                   node-version: 20
 
-            - name: Instalar dependencias
-              run: pnpm install
+            - name: Instalar dependencias con npm nativo
+              run: npm install
 
             - name: Construir el proyecto con Astro
-              run: pnpm build
+              run: npm run build
 
             - name: Cargar artefactos de producción
               uses: actions/upload-pages-artifact@v3
