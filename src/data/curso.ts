@@ -129,4 +129,54 @@ export const courseData: UnitModule[] = [
             },
         ],
     },
+
+    {
+        unitId: 'unidad-2',
+        unitTitle: 'Unidad 2: Producir con Claude',
+        classes: [
+            {
+                classNumber: 'Clase 04',
+                title: 'Cómo pedirle bien las cosas a Claude',
+                description:
+                    'Gestión eficiente del plan gratuito de Claude, aplicación del método estructurado O-D-F-R y técnicas de iteración precisa.',
+                guides: [
+                    'Límite en Claude gratuito: Ventana móvil de 5 horas (15 a 40 mensajes). Agrupa tareas, carga archivos al inicio y edita mensajes para ahorrar cuota.',
+                    'El método O-D-F-R: Explicita siempre Objetivo, Destinatario, Formato y Restricciones verificables (Puntaje ideal: 7 a 8 puntos).',
+                    'La prueba del colega: Si un compañero sin contexto no entendería tu instrucción, Claude tampoco y rellenará los vacíos con texto genérico.',
+                ],
+                prompts: [
+                    {
+                        id: 'c4-1',
+                        code: '04.A',
+                        title: 'El Caso de Consuelo resuelto con O-D-F-R (Puntaje 8/8)',
+                        tool: 'Claude',
+                        context:
+                            'Transforma un pedido genérico de redes sociales en una publicación lista para usar con tono, público y restricciones claras.',
+                        promptText:
+                            'Actúa como especialista en marketing digital para una pyme de indumentaria deportiva. Necesito redactar una publicación bajo estos criterios O-D-F-R:\n- Objetivo: Anunciar el lanzamiento de nuestra nueva línea de poleras técnicas transpirables y generar reservas anticipadas comentando la publicación.\n- Destinatario: Audiencia habitual de Instagram, hombres y mujeres de 20 a 35 años que practican deporte recreativo (running, trekking y gimnasio).\n- Formato: Texto para post de Instagram de máximo 150 palabras, estructurado en párrafos cortos de fácil lectura, tono cercano y motivador, cerrando con un llamado a la acción claro y exactamente 3 hashtags relevantes al final.\n- Restricciones: Es obligatorio mencionar que es una "edición limitada" por lanzamiento. Está estrictamente prohibido usar la palabra "oferta", "barato" o "descuento", y no uses adjetivos superlativos exagerados.',
+                    },
+                    {
+                        id: 'c4-2',
+                        code: '04.B',
+                        title: 'El Pedido de Rodrigo (Logística B2B + Marcadores Seguros)',
+                        tool: 'Claude',
+                        context:
+                            'Resuelve un reclamo a proveedores combinando estructura O-D-F-R y marcadores de seguridad para proteger datos sensibles.',
+                        promptText:
+                            'Soy gerente de logística en una distribuidora de ferretería. Redacta una comunicación aplicando estrictamente esta estructura O-D-F-R:\n- Objetivo: Notificar que una entrega reciente llegó con mercadería incompleta y solicitar la reposición urgente indicando una fecha concreta de despacho.\n- Destinatario: Ejecutivo comercial de nuestro proveedor habitual (relación B2B de largo plazo).\n- Formato: Correo electrónico formal y directo, de máximo 120 palabras, dejando visible en el asunto y en el primer párrafo el marcador [NÚMERO_DE_PEDIDO] y una lista breve para completar [DETALLE_ÍTEMS_FALTANTES].\n- Restricciones: Exige confirmación de fecha de reposición antes de las [HORA_LÍMITE] de hoy, pero mantén un tono constructivo: bajo ninguna circunstancia sugieras terminar la relación comercial, aplicar multas ni cancelar el contrato.',
+                    },
+                    {
+                        id: 'c4-3',
+                        code: '04.C',
+                        title: 'Auditor y Optimizador Automático O-D-F-R',
+                        tool: 'General',
+                        context:
+                            'Meta-prompt para autoevaluar cualquier instrucción de 0 a 8 puntos y reescribirla con alta especificidad antes de ejecutarla.',
+                        promptText:
+                            'Quiero que evalúes y mejores una instrucción antes de ejecutarla. Aquí está mi borrador inicial: "[PEGA AQUÍ TU INSTRUCCIÓN RÁPIDA O IDEA VAGA]".\n\nNo ejecutes la tarea todavía. Primero actúa como un experto en Ingeniería de Prompts y aplica el método O-D-F-R:\n1. Evalúa mi borrador asignándole un puntaje de 0 a 8 (evaluando de 0 a 2 puntos la claridad de: Objetivo, Destinatario, Formato y Restricciones).\n2. Dime brevemente qué vacíos dejé abiertos que habrían causado una respuesta genérica.\n3. Escribe una versión mejorada de mi prompt que alcance un puntaje 8/8, dejando entre corchetes [ ] cualquier dato específico de mi trabajo que yo deba rellenar.',
+                    },
+                ],
+            },
+        ],
+    },
 ];

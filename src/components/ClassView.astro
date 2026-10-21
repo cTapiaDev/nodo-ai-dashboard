@@ -6,10 +6,11 @@ interface Props {
 }
 
 const { initialClassNumber = 'Clase 01' } = Astro.props;
-const currentClass: ClassModule = courseData[0].classes.find(c => c.classNumber === initialClassNumber) || courseData[0].classes[0];
+const allClasses: ClassModule[] = courseData.flatMap((unit) => unit.classes);
+const currentClass: ClassModule = allClasses.find((c) => c.classNumber === initialClassNumber) || allClasses[0];
 ---
 
-<div id="class-view-container" class="flex flex-col gap-6 w-full pb-10" data-classes={JSON.stringify(courseData[0].classes)}>
+<div id="class-view-container" class="flex flex-col gap-6 w-full pb-10" data-classes={JSON.stringify(allClasses)}>
   
   <!-- Sección de Guías Teóricas -->
   <div class="flex flex-col gap-3">
