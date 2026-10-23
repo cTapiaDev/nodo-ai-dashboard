@@ -177,6 +177,60 @@ export const courseData: UnitModule[] = [
                     },
                 ],
             },
+
+            {
+                classNumber: 'Clase 05',
+                title: 'Producción de documentos y ordenamiento de datos',
+                description:
+                    'Generación directa de archivos descargables (Word, Excel, PowerPoint, PDF), análisis estructurado de datos propios, gráficos y localización.',
+                guides: [
+                    'Pide el archivo, no el texto: Usa verbos explícitos ("Crea un Word .docx" o "Arma una planilla Excel .xlsx") para obtener un archivo descargable.',
+                    'Nivel Alto en análisis de datos: Entrega tus datos indicando exactamente qué cruzar, cómo agrupar, qué calcular y con qué formato visual responder.',
+                    'Extensiones de valor: Transforma tablas complejas en gráficos visuales dentro de Artefactos y traduce adaptando el registro cultural local.',
+                ],
+                prompts: [
+                    {
+                        id: 'c5-1',
+                        code: '05.A',
+                        title: 'El Reporte de Rodrigo en Word Descargable (.docx)',
+                        tool: 'Claude',
+                        context:
+                            'Transforma apuntes sueltos en un documento Word profesional con síntesis ejecutiva y tabla estructurada lista para descargar.',
+                        promptText:
+                            'Actúa como asistente de operaciones logísticas. Necesito transformar mis apuntes sueltos de la semana en un archivo descargable aplicando O-D-F-R:\n- Objetivo: Generar el reporte semanal de estado de despachos para revisión de la gerencia.\n- Destinatario: Jefatura de Operaciones (requiere lectura rápida y ejecutiva).\n- Formato: Crea y entrégame un archivo Word (.docx) descargable con diseño profesional. Debe iniciar con una "Síntesis Ejecutiva" de 1 párrafo destacando el porcentaje de cumplimiento, seguido de una tabla ordenada con las columnas: [ID Pedido | Zona/Cliente | Estado Actual | Fecha Estimada | Observaciones].\n- Restricciones: No me entregues solo texto plano en el chat; utiliza tu herramienta de creación de archivos para darme el documento .docx listo para descargar.\n\nDatos de la semana para procesar:\nPed-101 Constructora Sur entregado el lunes sin novedad. Ped-102 Ferretería Central atrasado por falla mecánica del camión, nueva fecha jueves 26. Ped-103 Distribuidora Maule entregado martes OK. Ped-104 Obras Viales Norte en ruta, llega miércoles 25. Ped-105 Comercial Andina devuelto a bodega porque cliente estaba cerrado, reprogramado para viernes 27.',
+                    },
+                    {
+                        id: 'c5-2',
+                        code: '05.B',
+                        title: 'El Pedido de Carla: Planilla Excel (.xlsx) de Asistencia',
+                        tool: 'Claude',
+                        context:
+                            'Procesa registros brutos de RR.HH. generando un archivo Excel descargable ordenado de mayor a menor con alertas condicionales.',
+                        promptText:
+                            'Actúa como analista de Recursos Humanos. A partir del registro bruto que te entrego abajo, aplica el siguiente análisis de Nivel Alto:\n1. Entregable: Crea un archivo Excel (.xlsx) descargable.\n2. Análisis requerido: Agrupa por código de colaborador, calcula el total de días asistidos, el total de inasistencias del mes y el porcentaje de asistencia. Ordena la tabla resultante de mayor a menor cantidad de inasistencias.\n3. Formato visual y reglas: Incluye una columna llamada "Alerta de Gestión". Si el colaborador supera las 3 inasistencias en el mes, escribe "CRÍTICO - CITAR A REUNIÓN" y destaca esa fila o celda con fondo rojo suave; si tiene 3 o menos, escribe "NORMAL" en verde. (Nota: Datos anonimizados por Ley 21.719).\n\nRegistro bruto del mes (Sobre 20 días hábiles):\nEMP-01 (Área Ventas): Faltó el día 2 y el día 15.\nEMP-02 (Área Bodega): Faltó los días 3, 4, 11, 18 y 19.\nEMP-03 (Área Administración): Asistencia completa (0 faltas).\nEMP-04 (Área Bodega): Faltó los días 5, 12, 13 y 20.\nEMP-05 (Área Ventas): Faltó el día 8.',
+                    },
+                    {
+                        id: 'c5-3',
+                        code: '05.C',
+                        title: 'Análisis de Inventario Crítico + Gráfico Visual',
+                        tool: 'Claude',
+                        context:
+                            'Identifica los 5 productos con mayor déficit de stock, calcula el presupuesto de reposición y dibuja un gráfico comparativo.',
+                        promptText:
+                            'Soy encargado de bodega. Analiza este listado rápido de stock actual vs. stock mínimo requerido:\n- Taladro Percutor: Stock actual 4 u. (Mínimo requerido: 15 u.) - Costo reposición: $45.000 c/u\n- Esmeril Angular: Stock actual 18 u. (Mínimo requerido: 10 u.) - Costo reposición: $30.000 c/u\n- Juego de Brocas: Stock actual 2 u. (Mínimo requerido: 25 u.) - Costo reposición: $8.000 c/u\n- Sierra Circular: Stock actual 3 u. (Mínimo requerido: 12 u.) - Costo reposición: $60.000 c/u\n- Guantes de Seguridad: Stock actual 50 u. (Mínimo requerido: 30 u.) - Costo reposición: $2.500 c/u\n- Casco Dieléctrico: Stock actual 5 u. (Mínimo requerido: 20 u.) - Costo reposición: $12.000 c/u\n- Cinta Métrica 5m: Stock actual 6 u. (Mínimo requerido: 20 u.) - Costo reposición: $4.000 c/u\n\nInstrucciones:\n1. Identifica únicamente los 5 productos con mayor déficit de stock y arma una tabla con: [Producto | Stock Actual | Déficit (Unidades a comprar) | Presupuesto Total de Compra | Prioridad de Compra Esta Semana].\n2. Genera un Artefacto visual con un gráfico de barras limpio que compare el "Stock Actual" vs "Stock Mínimo" de esos 5 productos críticos para presentarlo hoy a gerencia.',
+                    },
+                    {
+                        id: 'c5-4',
+                        code: '05.D',
+                        title: 'Traducción Adaptada y Localización Comercial',
+                        tool: 'Claude',
+                        context:
+                            'Adapta comunicaciones internas con modismos chilenos a registros ejecutivos naturales para mercados internacionales.',
+                        promptText:
+                            'Necesito enviar este mensaje interno a dos socios internacionales (uno en Miami, EE.UU. y otro en Ciudad de México). El borrador tiene muchos modismos locales chilenos:\n\nBorrador: "Hola equipo, les escribo para sacar en limpio cómo vamos con la entrega del proyecto. Estamos medio al debe con los plazos de la etapa 2 y no podemos seguir chuteando el tema para el otro mes porque el cliente nos va a poner problemas. Necesito que me manden una cotización al callo de las horas extra hoy mismo antes de las 6 para dejar esto amarrado."\n\nInstrucciones:\nNo hagas una traducción literal palabra por palabra. Adapta el registro cultural y las convenciones de negocios locales generando dos versiones profesionales y cercanas:\n1. Inglés de negocios (EE.UU.): Natural, ejecutivo y orientado a la acción.\n2. Español corporativo (México / Latam Neutro): Reemplazando los chilenismos por expresiones ejecutivas naturales en ese mercado.',
+                    },
+                ],
+            },
         ],
     },
 ];
