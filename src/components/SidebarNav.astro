@@ -99,6 +99,13 @@ const units = courseData || [];
       window.dispatchEvent(new CustomEvent('change-class', { detail: { classNum } }));
     });
   });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const activeBtn = document.querySelector('.active-class-btn');
+    if (activeBtn) {
+        (activeBtn as HTMLElement).click();
+    }
+    });
 </script>
 
 <style>

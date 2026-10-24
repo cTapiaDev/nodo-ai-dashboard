@@ -1,0 +1,118 @@
+---
+// 🟢 Componente AudioPlayer actualizado con indicadores de tiempo y corrección de ruta BASE_URL
+---
+
+<div id="audio-player-container" class="w-full md:w-fit hidden items-center gap-3 bg-[#e0e5ec] dark:bg-gray-800 rounded-full px-4 py-1.5 shadow-[inset_2px_2px_5px_#b8bcc2,inset_-3px_-3px_7px_#ffffff] dark:shadow-[inset_2px_2px_5px_#1f2937,inset_-3px_-3px_7px_#374151]">
+  
+  <button id="play-pause-btn" class="w-8 h-8 flex items-center cursor-pointer justify-center rounded-full text-[#607931] hover:text-[#485b24] transition-colors shadow-[2px_2px_5px_#b8bcc2,-3px_-3px_7px_#ffffff] active:shadow-[inset_2px_2px_5px_#b8bcc2,inset_-3px_-3px_7px_#ffffff] dark:shadow-[2px_2px_5px_#1f2937,-3px_-3px_7px_#374151] dark:active:shadow-[inset_2px_2px_5px_#1f2937,inset_-3px_-3px_7px_#374151]">
+    <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    <svg id="icon-pause" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  </button>
+
+  <div class="flex flex-col">
+    <span class="text-[10px] font-mono font-bold text-[#607931] uppercase tracking-wider">Podcast de la Clase</span>
+    
+    <!-- 🟢 Contenedor de progreso con indicadores de tiempo -->
+    <div class="flex items-center gap-2 mt-0.5">
+      <span id="time-current" class="text-[9px] font-mono text-gray-500 w-6 text-right">00:00</span>
+      
+      <div class="w-24 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-full overflow-hidden cursor-pointer" id="progress-container">
+        <div id="progress-bar" class="h-full bg-[#607931] w-0 transition-all duration-75 pointer-events-none"></div>
+      </div>
+      
+      <span id="time-total" class="text-[9px] font-mono text-gray-500 w-6">00:00</span>
+    </div>
+  </div>
+
+  <!-- 🟢 Preload metadata para cargar la duración antes de darle play -->
+  <audio id="class-audio" preload="metadata"></audio>
+</div>
+
+<script>
+  // 🟢 Lógica reactiva para manejar tiempos, formato .m4a y evitar fallos por NaN
+  const container = document.getElementById('audio-player-container');
+  const audio = document.getElementById('class-audio') as HTMLAudioElement;
+  const playBtn = document.getElementById('play-pause-btn');
+  const iconPlay = document.getElementById('icon-play');
+  const iconPause = document.getElementById('icon-pause');
+  const progressContainer = document.getElementById('progress-container');
+  const progressBar = document.getElementById('progress-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+
+  const formatTime = (time: number) => {
+    if (isNaN(time)) return "00:00";
+    const m = Math.floor(time / 60);
+    const s = Math.floor(time % 60);
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const baseUrl = import.meta.env.BASE_URL;
+
+  window.addEventListener('change-class', ((e: CustomEvent) => {
+    const classContainer = document.getElementById('class-view-container');
+    if (!classContainer) return;
+    
+    const classesData = JSON.parse(classContainer.getAttribute('data-classes') || '[]');
+    const selectedClass = classesData.find((c: any) => c.classNumber === e.detail.classNum);
+
+    if (selectedClass && selectedClass.audioUrl) {
+      container?.classList.remove('hidden');
+      container?.classList.add('flex');
+      
+      const safeAudioPath = (baseUrl + selectedClass.audioUrl).replace(/([^:]\/)\/+/g, "$1");
+      
+      if (audio.getAttribute('src') !== safeAudioPath) {
+        audio.src = safeAudioPath;
+        resetPlayer();
+      }
+    } else {
+      container?.classList.add('hidden');
+      container?.classList.remove('flex');
+      audio.pause();
+      resetPlayer();
+    }
+  }) as EventListener);
+
+  playBtn?.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().then(() => {
+        iconPlay?.classList.add('hidden');
+        iconPause?.classList.remove('hidden');
+      }).catch(err => console.error("Error reproduciendo audio:", err));
+    } else {
+      audio.pause();
+      iconPlay?.classList.remove('hidden');
+      iconPause?.classList.add('hidden');
+    }
+  });
+
+  audio?.addEventListener('loadedmetadata', () => {
+    if (timeTotal) timeTotal.textContent = formatTime(audio.duration);
+  });
+
+  audio?.addEventListener('timeupdate', () => {
+    if (!isNaN(audio.duration)) {
+      const percentage = (audio.currentTime / audio.duration) * 100;
+      if (progressBar) progressBar.style.width = `${percentage}%`;
+      if (timeCurrent) timeCurrent.textContent = formatTime(audio.currentTime);
+    }
+  });
+
+  progressContainer?.addEventListener('click', (e) => {
+    if (isNaN(audio.duration)) return; 
+    const rect = progressContainer.getBoundingClientRect();
+    const pos = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = pos * audio.duration;
+  });
+
+  audio?.addEventListener('ended', resetPlayer);
+
+  function resetPlayer() {
+    iconPlay?.classList.remove('hidden');
+    iconPause?.classList.add('hidden');
+    if (progressBar) progressBar.style.width = '0%';
+    if (timeCurrent) timeCurrent.textContent = "00:00";
+    if (timeTotal) timeTotal.textContent = isNaN(audio.duration) ? "00:00" : formatTime(audio.duration);
+  }
+</script>

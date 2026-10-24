@@ -15,6 +15,7 @@ export interface ClassModule {
     description: string;
     guides: string[];
     prompts: PromptItem[];
+    audioUrl?: string;
 }
 
 export interface UnitModule {
@@ -104,6 +105,7 @@ export const courseData: UnitModule[] = [
                     'Descomposición de tareas: Ninguna tarea es 100% de la IA ni 100% humana (Humana + IA + Colaborativa).',
                     'Ley N° 21.719 (vigente dic 2026): Prohibición de ingresar RUT, salud y finanzas de terceros a modelos públicos.',
                 ],
+                audioUrl: '/audios/clase-03.m4a',
                 prompts: [
                     {
                         id: 'c3-1',
@@ -144,6 +146,7 @@ export const courseData: UnitModule[] = [
                     'El método O-D-F-R: Explicita siempre Objetivo, Destinatario, Formato y Restricciones verificables (Puntaje ideal: 7 a 8 puntos).',
                     'La prueba del colega: Si un compañero sin contexto no entendería tu instrucción, Claude tampoco y rellenará los vacíos con texto genérico.',
                 ],
+                audioUrl: '/audios/clase-04.m4a',
                 prompts: [
                     {
                         id: 'c4-1',
@@ -188,6 +191,7 @@ export const courseData: UnitModule[] = [
                     'Nivel Alto en análisis de datos: Entrega tus datos indicando exactamente qué cruzar, cómo agrupar, qué calcular y con qué formato visual responder.',
                     'Extensiones de valor: Transforma tablas complejas en gráficos visuales dentro de Artefactos y traduce adaptando el registro cultural local.',
                 ],
+                audioUrl: '/audios/clase-05.m4a',
                 prompts: [
                     {
                         id: 'c5-1',
