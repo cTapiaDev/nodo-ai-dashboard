@@ -5,8 +5,10 @@ import SidebarNav from '../components/SidebarNav.astro';
 import ClassView from '../components/ClassView.astro';
 import { courseData } from '../data/curso';
 
-const units = courseData || [];
-const initialUnit = units.length > 0 ? units[units.length - 1] : null;
+const allUnits = courseData || [];
+const realUnits = allUnits.filter((unit) => !unit.unitId.toLowerCase().includes('anexo'));
+
+const initialUnit = realUnits.length > 0 ? realUnits[realUnits.length - 1] : null;
 const initialClass = initialUnit && initialUnit.classes.length > 0 
   ? initialUnit.classes[initialUnit.classes.length - 1] 
   : null;

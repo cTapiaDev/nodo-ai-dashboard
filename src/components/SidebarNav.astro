@@ -2,12 +2,18 @@
 import { courseData } from '../data/curso';
 
 const units = courseData || [];
+
+const validUnits = units.filter(unit => !unit.unitId.toLowerCase().includes('anexo'));
+const activeUnit = validUnits.length > 0 ? validUnits[validUnits.length - 1] : null;
+const activeClass = activeUnit && activeUnit.classes.length > 0 
+  ? activeUnit.classes[activeUnit.classes.length - 1] 
+  : null;
 ---
 
 <nav class="mt-4 flex-1 min-h-0 overflow-y-auto pb-6 pr-1 flex flex-col gap-3 w-full custom-scrollbar" aria-label="Navegación del Curso">
   {units.length > 0 ? (
-    units.map((unit, unitIdx) => {
-        const isLastUnit = unitIdx === units.length - 1;
+    units.map((unit) => {
+        const isAccordionOpen = activeUnit && unit.unitId === activeUnit.unitId;
      return (
       <div class="flex flex-col shrink-0 w-full rounded-xl overflow-hidden mb-2" style="background-color: #556a2c; box-shadow: inset 2px 2px 5px #485b24, inset -2px -2px 5px #627934;">
         <!-- Botón Acordeón de la Unidad -->
@@ -16,15 +22,15 @@ const units = courseData || [];
           class="unit-accordion-btn w-full px-4 py-3 text-left flex items-center justify-between font-display font-bold text-sm uppercase tracking-wider text-white transition-colors cursor-pointer"
         >
           <span class="pr-2 pointer-events-none">{unit.unitTitle}</span>
-          <svg class={`accordion-icon w-5 h-5 transform transition-transform duration-200 shrink-0 pointer-events-none ${isLastUnit ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class={`accordion-icon w-5 h-5 transform transition-transform duration-200 shrink-0 pointer-events-none ${isAccordionOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
         </button>
 
         <!-- Lista de Clases Desplegable -->
-        <div class={`unit-classes-container flex flex-col w-full p-2 gap-2 ${isLastUnit ? '' : 'hidden'}`}>
-          {unit.classes && unit.classes.map((cls, index) => {
-            const isFirst = unitIdx === units.length - 1 && index === unit.classes.length - 1;
+        <div class={`unit-classes-container flex flex-col w-full p-2 gap-2 ${isAccordionOpen ? '' : 'hidden'}`}>
+          {unit.classes && unit.classes.map((cls) => {
+            const isFirst = activeClass && cls.classNumber === activeClass.classNumber;
             return (
               <button
                 type="button"

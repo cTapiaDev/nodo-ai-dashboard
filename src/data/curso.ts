@@ -235,6 +235,217 @@ export const courseData: UnitModule[] = [
                     },
                 ],
             },
+
+            {
+                classNumber: 'clase 06',
+                title: 'Revisar lo que la IA devuelve',
+                description:
+                    'Auditoría crítica de contenidos generados por IA: detección de errores ocultos, matriz de riesgo, gobernanza de datos y el cambio de paradigma hacia el uso de Claude como socio estratégico de pensamiento.',
+                audioUrl: '/audios/clase-06.m4a',
+                guides: [
+                    'Cinco categorías obligatorias de revisión: Datos y cifras (recalcular siempre), Nombres, Citas/Referencias, Fechas y Afirmaciones Causales (verificar que la causa exista en los datos originales).',
+                    'Matriz de riesgo cuando hay poco tiempo: Priorizar siempre lo de alto costo de error y fácil verificación (recalcular subtotales) y jamás omitir lo de alto costo y difícil verificación (causas inventadas y citas).',
+                    'Cuatro señales de alerta en textos extensos: Cifras sospechosamente redondas, causas sin contexto previo, datos inconsistentes entre secciones y párrafos completos sobre temas no entregados en la fuente.',
+                    'Flujo profesional de corrección: Detectar (clasificar en las 5 categorías), Contrastar (volver a la fuente original, no solo reescribir para que suene bien) y Documentar (dejar bitácora de verificación).',
+                    "Cuatro frases-gatillo como Socio de Pensamiento: 1) 'Dame 3 alternativas con ventajas y desventajas, no elijas por mí', 2) 'Dime qué estoy dando por sentado', 3) '¿Qué pregunta debería hacerme que no me he hecho?', 4) 'Profundiza en este ángulo'.",
+                ],
+                prompts: [
+                    {
+                        id: 'c6-p1',
+                        code: '01 // DEMO INDUCCIÓN AL ERROR',
+                        title: 'La trampa del tono triunfalista (Caso Logística)',
+                        tool: 'Claude',
+                        context:
+                            "Demostración de cómo pedirle a la IA que 'destaque la gestión' o 'suene convincente' la empuja a inventar afirmaciones causales y comparaciones temporales que no existen en los datos crudos.",
+                        promptText: `Actúa como Jefe de Logística. Redacta un informe ejecutivo de cierre de agosto para el Directorio usando únicamente estos apuntes rápidos:
+- Pedidos agosto: 214 totales (198 a tiempo, 16 atrasados). Promedio entrega: 2,3 días.
+- Gasto flete urbano: $2.180.000. Gasto flete interurbano: $1.140.000.
+- Problemas del mes: demoras al confirmar stock en bodega y falta de aviso al cliente cuando hay atraso.
+
+Instrucción de estilo: Necesito que el informe destaque nuestra excelente gestión, compare el éxito con meses anteriores, explique las causas estratégicas de nuestras mejoras en costos y proyecte seguridad sobre nuestro proveedor actual para que la gerencia apruebe el presupuesto anual.`,
+                    },
+                    {
+                        id: 'c6-p2',
+                        code: '02 // GOBERNANZA Y PLACEHOLDERS',
+                        title: 'Bloqueo de condiciones comerciales no autorizadas',
+                        tool: 'Claude',
+                        context:
+                            'Técnica defensiva mediante marcadores de posición entre corchetes para evitar que la IA invente causas de fallos, prometa fechas legales o regale descuentos en comunicaciones con clientes.',
+                        promptText: `Actúa como Ejecutivo de Atención al Cliente. Redacta un correo muy empático para el cliente "Constructora Andes" disculpándote porque su pedido #405 lleva 4 días de atraso.
+
+REGLA ESTRICTA DE GOBERNANZA: No tienes autorización para asumir la causa del retraso, ni para prometer fechas exactas de entrega, ni para ofrecer compensaciones económicas o envíos gratis. Cualquier dato relativo a causas, fechas o compensaciones que consideres necesario incluir para que el correo funcione, debes dejarlo estrictamente encerrado entre corchetes en mayúsculas, por ejemplo: [INDICAR CAUSA], [FECHA DE ENTREGA], [COMPENSACIÓN AUTORIZADA], para que un supervisor humano lo complete antes de enviar.`,
+                    },
+                    {
+                        id: 'c6-p3',
+                        code: '03 // AUTO-AUDITORÍA CRUZADA',
+                        title: 'Bitácora de verificación y limpieza contra la fuente',
+                        tool: 'Claude',
+                        context:
+                            'Prompt para ejecutar inmediatamente después de generar un informe largo. Obliga al modelo a auditar su propio texto frente a los datos originales y documentar los hallazgos en una tabla.',
+                        promptText: `Actúa como un Auditor de Control de Calidad estricto. Revisa el informe ejecutivo que acabas de redactar arriba y compáralo palabra por palabra contra los "apuntes rápidos" originales que te entregué en el primer mensaje.
+
+Genera una tabla de auditoría con 4 columnas:
+1. Frase o cifra afirmada en el informe generado.
+2. Categoría (Cifra, Fecha, Nombre, Cita o Afirmación Causal).
+3. Estado de Verificación (Respaldado por la fuente / Alucinación sin respaldo / Cálculo erróneo).
+4. Acción correctiva aplicada (Eliminado o corregido).
+
+Debajo de la tabla, entrégame la versión 100% limpia y corregida del informe, sin agregar ni una sola inferencia que no esté en los apuntes originales.`,
+                    },
+                    {
+                        id: 'c6-p4',
+                        code: '04 // SOCIO DE PENSAMIENTO',
+                        title: 'Activación de frases-gatillo (Caso Cierre de Sucursal)',
+                        tool: 'Claude',
+                        context:
+                            'Contraste entre pedirle a la IA que tome una decisión como un oráculo versus utilizar frases-gatillo para cuestionar supuestos y descubrir puntos ciegos estratégicos.',
+                        promptText: `Soy Camila, jefa de atención al cliente. Tengo una sucursal presencial cuyo tráfico de visitas cayó un 60% este semestre y el arriendo es caro, así que estoy pensando en cerrarla el próximo mes.
+
+No tomes la decisión por mí ni me des un plan de cierre todavía. Actúa como mi socio de pensamiento estratégico:
+1. Dime qué estoy dando por sentado al pensar que el bajo tráfico presencial justifica el cierre.
+2. ¿Qué 3 preguntas críticas de negocio debería hacerme antes de tomar esta decisión, que todavía no me he hecho?`,
+                    },
+                    {
+                        id: 'c6-p5',
+                        code: '05 // TALLER EN VIVO: DATOS Y MUESTRAS',
+                        title: 'Detección de descuadres y generalización abusiva (RR.HH.)',
+                        tool: 'Claude',
+                        context:
+                            'Ejercicio práctico grupal para detectar errores matemáticos en subtotales, extrapolación engañosa de una muestra pequeña y conexión artificial de métricas no relacionadas.',
+                        promptText: `Actúa como Analista de Recursos Humanos. Redacta una solicitud formal de aprobación de presupuesto de $4.500.000 dirigida a la Gerencia de Finanzas para contratar un curso de "Liderazgo Ágil", basándote en estos datos de nuestra encuesta interna de octubre:
+- Total de empleados de la empresa: 120 personas.
+- Empleados que respondieron la encuesta: 15 personas (del área de Marketing).
+- De los que respondieron: 12 dijeron preferir clases martes y jueves; 9 dijeron sentir falta de herramientas de liderazgo.
+- Costo del proveedor "CapacitaPro": $3.200.000 por el curso + $800.000 por licencias de software + $400.000 por coffee break presencial.
+- Nota adicional: En septiembre la rotación de personal fue del 8%.
+
+Redacta el documento de forma muy persuasiva, conectando los datos para justificar la urgencia del gasto.`,
+                    },
+                    {
+                        id: 'c6-p6',
+                        code: '06 // TALLER EN VIVO: SESGO DE COMPLACENCIA',
+                        title: 'Freno de decisiones impulsivas con frases-gatillo',
+                        tool: 'Claude',
+                        context:
+                            'Transformación de una orden ejecutiva riesgosa (donde la IA suele ser complaciente y obedecer sin cuestionar) hacia una consulta estratégica de exploración de opciones y riesgos legales.',
+                        promptText: `Nuestras ventas bajaron un 15% este mes porque la competencia bajó sus precios, y estoy tentado a cambiar el esquema de comisiones de mis vendedores por multas y descuentos sobre su sueldo cada vez que pierdan un cliente para presionarlos a rendir más.
+
+Antes de redactar cualquier comunicado o tomar una medida, actúa como mi socio de pensamiento estratégico:
+1. Dime qué estoy dando por sentado al asumir que la caída de ventas se resuelve presionando o castigando al equipo comercial.
+2. ¿Qué puntos ciegos legales, financieros y de fuga de talento no estoy viendo en mi propuesta inicial?
+3. Dame 3 alternativas estratégicas con ventajas y desventajas para responder a una guerra de precios sin destruir al equipo, todavía no elijas por mí.`,
+                    },
+                ],
+            },
+        ],
+    },
+
+    // Anexo
+    {
+        unitId: 'anexo-avanzado',
+        unitTitle: 'Anexo: Laboratorios Avanzados de Código',
+        classes: [
+            {
+                classNumber: 'A1',
+                title: 'Prototipado UI, Motion y WebGL',
+                description:
+                    'Desafíos avanzados de ingeniería de prompts enfocados en desarrollo web front-end. Desde landing pages inmersivas y animaciones DOM, hasta renderizado espacial 3D con consumo de APIs reales en Gemini 4 Argon.',
+                guides: [
+                    'Para los retos de interfaz (Landing y Motion), exige que el resultado se entregue en un único bloque de código consolidado (HTML/CSS/JS) para facilitar su ejecución inmediata en el navegador.',
+                    'Para lograr animaciones a 60fps en la capa gratuita, restringe el uso de librerías externas y prioriza animaciones CSS por hardware (transform, opacity) controladas por Vanilla JS moderno.',
+                    "En Claude, utiliza la instrucción explícita de generar un 'Artefacto interactivo' para poder probar y visualizar el código sin salir de la plataforma.",
+                    'En Gemini Argon, exprime su capacidad de simulación (Three.js) prohibiendo estrictamente los mockups de datos y obligando al motor a consumir APIs públicas mediante fetch.',
+                ],
+                prompts: [
+                    {
+                        id: 'anx-p1',
+                        code: '01 // UI & LAYOUT',
+                        title: 'Landing Page Inmersiva (Estilo NatGeo)',
+                        tool: 'General',
+                        context:
+                            'Prompt para generar una estructura de una sola página (Single Page) de alto impacto visual, controlando la paleta de colores, la arquitectura de secciones y aplicando reglas estrictas de código limpio.',
+                        promptText: `Actúa como un Frontend Developer Senior y UI/UX Designer. Tu tarea es desarrollar una Landing Page inmersiva e interactiva sobre naturaleza y conservación de vida salvaje. Todo el código debe entregarse consolidado en un único archivo HTML (con el CSS y JS integrados) listo para ejecutarse en el navegador.
+
+1. Dirección de Arte y Estilo Visual (Estilo National Geographic):
+- Paleta de colores: Utiliza estrictamente una paleta de alto contraste basada en negros profundos (#000000, #111111), grises oscuros, y acentos en amarillo vibrante (#FFCC00 o similar). Prohibido utilizar colores verdes.
+- Tipografía: Emplea fuentes sans-serif modernas, geométricas y legibles (puedes importar desde Google Fonts), jugando con pesos tipográficos masivos para los títulos.
+
+2. Estructura del Layout (Exactamente 4 secciones):
+- Section 1: Hero Immersive. Un contenedor que ocupe exactamente 100vh y 100vw. Debe tener una imagen de fondo de un animal salvaje (utiliza una URL de Unsplash) con un overlay oscuro para dar legibilidad. En el centro, un titular enorme, un botón de 'Explorar' y un indicador de 'Scroll Down'.
+- Section 2: The Mission. Diseño asimétrico tipo grid que combine texto descriptivo en blanco/amarillo con imágenes secundarias.
+- Section 3: Wildlife Grid. Galería de 3 tarjetas (cards) de diferentes especies (imagen, título y descripción).
+- Section 4: Footer. Pie de página minimalista en negro puro.
+
+3. Animaciones y Motion (CSS Puro):
+- Aplica un zoom-in infinito y lento sobre la imagen del Hero usando @keyframes.
+- El indicador de 'Scroll Down' debe tener una animación de rebote (bounce) suave.
+- Las tarjetas de la sección 3 deben elevarse y cambiar su borde a amarillo al hacer hover (transitions).
+
+4. Reglas Técnicas Obligatorias:
+- Nomenclatura: TODOS los nombres de clases, id y variables deben estar en INGLÉS.
+- Restricción CSS: NO utilices JAMÁS la directiva !important.
+- JavaScript Moderno: Usa Vanilla JS (ES6+) y aplica exclusivamente funciones de flecha (arrow functions).`,
+                    },
+                    {
+                        id: 'anx-p2',
+                        code: '02 // MOTION DESIGN',
+                        title: 'Apertura Geométrica (Split Screen Intro)',
+                        tool: 'Claude',
+                        context:
+                            'Obliga a Claude a utilizar su panel de Artefactos para renderizar una secuencia de animación temporal controlada por JavaScript y transformaciones CSS, sin librerías externas.',
+                        promptText: `Actúa como un UI/UX Motion Designer y Frontend Developer experto. Tu tarea es crear una "Apertura Geométrica" (Split Screen Intro) de alta calidad.
+
+1. Formato de Entrega Obligatorio:
+Genera un Artefacto (Artifact) interactivo de código (usando HTML, CSS y JS) para que pueda previsualizar y probar la animación directamente aquí en tu interfaz. Todo el código debe estar consolidado.
+
+2. Dirección de Arte y Estilo Visual:
+- Diseño minimalista y corporativo moderno.
+- La vista inicial debe estar bloqueada por dos grandes paneles de un color oscuro elegante (ej. gris casi negro), divididos exactamente por la mitad (vertical u horizontalmente).
+- En el centro de la intersección, coloca un texto de bienvenida tipográficamente imponente.
+- Debajo de estos paneles, debe existir un contenedor oculto con contenido simulado que represente el sitio web real.
+
+3. Secuencia de Animación y Motion:
+- Fase 1 (0s a 2s): Pantalla estática, texto central 100% visible.
+- Fase 2 (2s a 2.8s): El texto central realiza un fade-out suave y reduce su escala.
+- Fase 3 (2.8s a 4s): Los paneles se deslizan en direcciones opuestas (usando transform: translateY o translateX) fuera de la pantalla con una curva de aceleración elegante (cubic-bezier).
+- Fase 4 (4s en adelante): El contenedor de animación debe aplicar pointer-events: none para permitir interacción con el sitio web revelado.
+
+4. Reglas Técnicas Obligatorias:
+- Nomenclatura: Todas las clases, ids y variables en estricto INGLÉS.
+- Restricción CSS: PROHIBIDO utilizar la directiva !important. No uses librerías externas.
+- JavaScript Moderno: Manipula el classList en conjunto con setTimeout. Utiliza ES6+ y aplica exclusivamente funciones de flecha (arrow functions).`,
+                    },
+                    {
+                        id: 'anx-p3',
+                        code: '03 // DATA & WEBGL',
+                        title: 'Scrollytelling Topográfico 3D (Argon)',
+                        tool: 'Gemini',
+                        context:
+                            'Prompt avanzado para el entorno AI Studio Build (Gemini 4 Argon), exigiendo renderizado 3D, Tailwind v4 sin configuración y consumo de datos reales para evitar alucinaciones matemáticas.',
+                        promptText: `Actúa como un Data Visualization Engineer y experto en WebGL. Tu objetivo es construir un prototipo interactivo de "Scrollytelling 3D y Visualización Topográfica" en un único archivo HTML, optimizado para ejecutarse directamente en el entorno interactivo de Gemini 4 Argon.
+
+1. Fuente de Datos (Regla Estricta):
+- Está terminantemente prohibido utilizar mockups de datos.
+- Debes consumir una API pública real y operativa utilizando fetch (ej. actividad sísmica global o datos climáticos).
+
+2. Tecnologías y Librerías:
+- Importa Three.js vía CDN para el renderizado del mapa topográfico y la extrusión de datos.
+- Utiliza Tailwind CSS v4 vía CDN para la interfaz de usuario. Tailwind v4 no utiliza tailwind.config.js, aplica las clases utilitarias directamente.
+- Vanilla JavaScript (ES6+) para toda la orquestación.
+
+3. Reglas de Código Obligatorias:
+- Absolutamente todos los nombres de variables, funciones y clases del DOM deben estar escritos en INGLÉS.
+- La lógica debe construirse empleando exclusivamente funciones de flecha (arrow functions).
+- Prohibido el uso de la directiva !important en CSS.
+- Cualquier bloque de código nuevo o función clave debe ir obligatoriamente precedido por un comentario con un icono descriptivo de color verde (ej. // Fetching real data from API).
+
+4. Arquitectura Visual y Scrollytelling:
+- Capa 3D: Renderiza un mapa base en un entorno oscuro. Los datos de la API deben extruirse sobre sus coordenadas como prismas 3D. La altura y el color deben mapearse dinámicamente según el valor numérico.
+- Capa HTML: Crea un layout de Scrollytelling transparente con secciones explicativas estructuradas con Tailwind CSS.
+- Interacción: Captura el evento de scroll. Al bajar, interpola suavemente la cámara 3D para enfocar grupos de datos que coincidan con la sección activa en pantalla.`,
+                    },
+                ],
+            },
         ],
     },
 ];
