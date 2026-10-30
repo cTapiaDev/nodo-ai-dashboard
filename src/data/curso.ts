@@ -234,7 +234,7 @@ export const courseData: UnitModule[] = [
             },
 
             {
-                classNumber: 'clase 06',
+                classNumber: 'Clase 06',
                 title: 'Revisar lo que la IA devuelve',
                 description:
                     'Auditoría crítica de contenidos generados por IA: detección de errores ocultos, matriz de riesgo, gobernanza de datos y el cambio de paradigma hacia el uso de Claude como socio estratégico de pensamiento.',
@@ -330,6 +330,105 @@ Antes de redactar cualquier comunicado o tomar una medida, actúa como mi socio 
 1. Dime qué estoy dando por sentado al asumir que la caída de ventas se resuelve presionando o castigando al equipo comercial.
 2. ¿Qué puntos ciegos legales, financieros y de fuga de talento no estoy viendo en mi propuesta inicial?
 3. Dame 3 alternativas estratégicas con ventajas y desventajas para responder a una guerra de precios sin destruir al equipo, todavía no elijas por mí.`,
+                    },
+                ],
+            },
+
+            {
+                classNumber: 'Clase 07',
+                title: 'Crear herramientas sin programar',
+                description:
+                    'Diseño y construcción de micro-aplicaciones interactivas (Artefactos) en Claude: calculadoras de negocio, checklists dinámicos, tableros visuales en tiempo real y matrices de pruebas de calidad (QA).',
+                guides: [
+                    'Criterio de decisión (Test de 3 puntos): Conviene crear un artefacto cuando la tarea se repite más de 5 veces al mes, su lógica se explica en menos de 5 frases y es útil para que otras personas la usen.',
+                    'Estructura O-D-F-R aplicada a software: Objetivo (qué resuelve), Destinatario (quién la opera y en qué contexto), Formato (inputs, botones y salidas visuales) y Restricciones (las fórmulas matemáticas exactas y reglas de negocio).',
+                    'Más allá del cálculo plano: Un buen artefacto debe integrar validación de errores, gráficos que reaccionen en tiempo real y botones de acción (ej. copiar resúmenes para WhatsApp o exportar a CSV).',
+                    'Publicación y Remezcla (Remix): Los artefactos se ejecutan en un entorno aislado del navegador y pueden compartirse mediante un enlace público sin que el destinatario tenga cuenta en Claude.',
+                    'Matriz de Pruebas y QA con terceros: El autor nunca detecta sus propios tropiezos de diseño. Siempre se debe probar con otra persona evaluando Casos Normales y Casos Límite (campos vacíos, ceros, negativos o datos fuera de rango).',
+                ],
+                prompts: [
+                    {
+                        id: 'c7-p1',
+                        code: '01 // CALCULADORA DE NEGOCIO (O-D-F-R)',
+                        title: 'Cotizador en tiempo real con validación y salida a WhatsApp',
+                        tool: 'Claude',
+                        context:
+                            'Transformación de una fórmula mental de negocio (Caso Taller de Costura de Marisol) en una aplicación interactiva que previene cobros en $0 y redacta el mensaje para el cliente.',
+                        promptText: `Actúa como un Desarrollador de Herramientas Digitales experto en UX. Construye un Artefacto interactivo aplicando esta estructura O-D-F-R:
+
+- OBJETIVO: Una calculadora de cotizaciones en tiempo real para el taller de costura de Marisol.
+- DESTINATARIO: Marisol, quien necesita cotizar rápido desde su celular o computador mientras conversa con la clienta.
+- FORMATO: Una aplicación web interactiva, limpia y moderna que funcione directamente en el panel de Artefactos. Debe tener campos de entrada claros, un desglose visual del cobro y un botón de acción rápida.
+- RESTRICCIONES Y LÓGICA DE NEGOCIO:
+  1. Costo de tela: $8.000 CLP por cada metro ingresado (permitir decimales, ej. 1.5 metros).
+  2. Costo base de confección según tipo de prenda: Vestido ($12.000 CLP), Pantalón ($9.000 CLP), Blusa ($7.000 CLP).
+  3. Recargo por urgencia: Si se marca la opción "Pedido Urgente (entrega en 48 hrs)", aplicar un +20% sobre la suma de (Tela + Confección).
+  4. Validación de casos límite (QA): Si el usuario ingresa 0 metros, números negativos o deja el campo vacío, no calcules $0; muestra una alerta visual amigable pidiendo ingresar un metraje válido.
+  5. Funcionalidad Extra: Agrega un botón llamado "Copiar resumen para WhatsApp" que copie al portapapeles un texto cordial con el desglose exacto listo para enviarle a la clienta.`,
+                    },
+                    {
+                        id: 'c7-p2',
+                        code: '02 // CHECKLIST DE PROCESOS CRÍTICOS',
+                        title: 'Verificador interactivo con barra de progreso y bloqueo',
+                        tool: 'Claude',
+                        context:
+                            'Aplicación del método O-D-F-R para estandarizar procesos repetitivos con pasos fijos (Caso Recepción de Pacientes), separando requisitos logísticos de restricciones éticas/clínicas.',
+                        promptText: `Construye un Artefacto interactivo basándote en este diseño O-D-F-R:
+
+- OBJETIVO: Un checklist interactivo de preparación y recepción previa a la primera sesión de kinesiología.
+- DESTINATARIO: Pacientes que agendan por primera vez (sin conocimientos técnicos) o la recepcionista verificando los requisitos al llegar.
+- FORMATO: Lista interactiva con casilleros marcables (checkboxes), máximo 6 ítems, con una barra de progreso visual en la parte superior y diseño adaptado a pantallas móviles.
+- RESTRICCIONES:
+  1. Incluir requisitos logísticos: traer ropa cómoda/deportiva, orden médica o exámenes previos (si existen), llegar 10 minutos antes e hidratación previa.
+  2. Prohibición estricta: NO incluir ninguna indicación clínica, diagnóstica ni ejercicios físicos que el profesional deba evaluar en persona.
+  3. Funcionalidad Extra: Clasifica los ítems en "Obligatorios" y "Recomendados". Solo cuando todos los ítems obligatorios estén marcados, el estado superior debe cambiar a color verde diciendo "¡Paciente listo para ingresar a sesión!" y habilitar un botón para copiar el comprobante de recepción.`,
+                    },
+                    {
+                        id: 'c7-p3',
+                        code: '03 // DASHBOARD & VISUALIZACIÓN',
+                        title: 'Tablero de control presupuestario con gráficos en vivo',
+                        tool: 'Claude',
+                        context:
+                            'Uso de Artefactos para ir más allá del cálculo simple, generando visualizaciones dinámicas de datos, alertas de sobregiro y exportación a CSV sin usar hojas de cálculo.',
+                        promptText: `Actúa como un Especialista en Control de Gestión y Visualización de Datos. Genera un Artefacto interactivo que funcione como un "Simulador y Tablero de Presupuesto de Proyectos".
+
+- OBJETIVO: Permitir a un jefe de área ingresar partidas de gasto de un proyecto y visualizar en tiempo real cuánto presupuesto queda y cómo se distribuye por categoría.
+- DESTINATARIO: Jefaturas y coordinadores que necesitan tomar decisiones rápidas en reuniones sin abrir hojas de cálculo complejas.
+- FORMATO: Dashboard de una sola vista con: 1) Campo para definir el "Presupuesto Total Inicial", 2) Formulario rápido para agregar ítems (Nombre del gasto, Categoría [Operaciones, Marketing, Personal, Imprevistos] y Monto en CLP), 3) Tarjetas superiores de resumen (Total Gastado, Saldo Disponible, % Consumido) y 4) Gráfico de barras o dona que se actualice en vivo cada vez que se agrega o elimina un ítem.
+- RESTRICCIONES Y LÓGICA:
+  1. Precarga 4 gastos de ejemplo realistas para que el gráfico se vea activo desde el primer segundo.
+  2. Si la suma de gastos supera el Presupuesto Inicial, la tarjeta de "Saldo Disponible" debe ponerse en color rojo y mostrar una alerta de "Sobregiro Presupuestario".
+  3. Agrega un botón para exportar la tabla final en formato CSV.`,
+                    },
+                    {
+                        id: 'c7-p4',
+                        code: '04 // TALLER QA: CREACIÓN DEL PROTOTIPO',
+                        title: 'Cotizador comercial B2B con reglas de margen',
+                        tool: 'Claude',
+                        context:
+                            'Primera fase del taller grupal: creación de una herramienta comercial funcional para someterla a pruebas de usuario y detección de casos límite no contemplados.',
+                        promptText: `Construye un Artefacto interactivo aplicando esta estructura O-D-F-R:
+
+- OBJETIVO: Una calculadora de cotizaciones de servicios B2B y control de márgenes de descuento para ejecutivos comerciales.
+- DESTINATARIO: Vendedores que necesitan armar un presupuesto rápido en llamada con un cliente sin comprometer la rentabilidad.
+- FORMATO: Aplicación interactiva con selección de servicios (Consultoría Base: $500.000, Implementación Técnica: $1.200.000, Capacitación de Equipo: $450.000), cantidad de horas adicionales ($35.000/hr), un control para aplicar "% de Descuento Comercial" y un cuadro inferior con el borrador del correo de propuesta autogenerado.
+- RESTRICCIONES (LÓGICA):
+  1. Sumar los servicios seleccionados más las horas adicionales para obtener el Subtotal Neto.
+  2. Aplicar el porcentaje de descuento ingresado y luego calcular el IVA (19%) y el Total Final.
+  3. Regla de negocio: El descuento máximo autorizado para un vendedor es del 15%. Si ingresa más de 15%, mostrar una advertencia visual indicando "Requiere aprobación de Gerencia".`,
+                    },
+                    {
+                        id: 'c7-p5',
+                        code: '05 // TALLER QA: BLINDAJE DE CASOS LÍMITE',
+                        title: 'Iteración de código tras aplicar la Matriz de Pruebas',
+                        tool: 'Claude',
+                        context:
+                            'Segunda fase del taller grupal: prompt correctivo para blindar el artefacto contra entradas vacías, números negativos, descuentos irreales y problemas de usabilidad detectados por terceros.',
+                        promptText: `Actúa como Ingeniero de QA (Control de Calidad). Hemos probado tu artefacto con usuarios reales aplicando una Matriz de Pruebas y detectamos los siguientes fallos en casos límite que debes corregir inmediatamente:
+
+1. Caso Límite Vacío: Si no hay ningún servicio seleccionado y las horas son 0, bloquea la vista de resultados y muestra un aviso claro pidiendo seleccionar al menos un ítem antes de cotizar.
+2. Caso Límite Numérico: Impide por completo que el usuario ingrese horas negativas o porcentajes de descuento menores a 0% o superiores al 30% (tope máximo absoluto del sistema).
+3. Mejora de Usabilidad (UX): Muestra explícitamente en pesos chilenos (CLP) cuánto dinero se está descontando en la línea de descuento, y añade un botón de "Copiar Propuesta" que cambie su texto a "¡Copiado!" al hacer clic.`,
                     },
                 ],
             },
