@@ -550,6 +550,157 @@ Deben diseñar el Espacio de Trabajo completo (Proyecto + Base de Conocimiento +
         ],
     },
 
+    // Unidad 3
+    {
+        unitId: 'unidad-3',
+        unitTitle: 'Unidad 3: Dejarlo funcionando con Gemini',
+        classes: [
+            {
+                classNumber: 'Clase 09',
+                title: 'Gemini y su plan gratuito',
+                description:
+                    'Administración estratégica del ecosistema gratuito de Google Gemini: diferencias operativas entre Flash y Pro, gestión de cuotas independientes por recursos computacionales, Investigación Profunda y automatización de fórmulas y limpieza de datos en Google Sheets.',
+                guides: [
+                    'Objetivo de la clase: Administrar estratégicamente los modelos Flash, Pro e Investigación Profunda sin agotar la cuota gratuita, y delegar la creación de fórmulas y limpieza de planillas en Google Sheets.',
+                    'Flash vs. Pro y medición por recursos: Desde mayo de 2026 el consumo se mide por recursos computacionales, no por cantidad de mensajes. Usa Flash por defecto para tareas rápidas del día a día (15% de coste relativo) y reserva Pro para análisis complejos (45% de coste).',
+                    'Cuatro cuotas independientes entre sí: 1) Conversación de texto (diaria, amplia), 2) Generación de imágenes (diaria, moderada), 3) Resúmenes de audio (diaria, moderada) y 4) Investigación profunda / Deep Research (mensual, muy costosa: 90%). Agotar una no bloquea las demás.',
+                    'Qué incluye tu cuenta Google gratuita: Acceso a Flash, cuota diaria de Pro, Gems (instrucciones fijas), Canvas (entorno interactivo), análisis de archivos, voz (Live), integración en Workspace y NotebookLM (hasta 100 cuadernos con 50 fuentes cada uno).',
+                    'Estrategia híbrida y Google Sheets: Alternar tareas entre Claude y Gemini duplica tu capacidad gratuita diaria. En Google Sheets, usa Gemini para traducir pedidos en lenguaje natural a fórmulas exactas, limpiar datos inconsistentes y ordenar tablas.',
+                ],
+                prompts: [
+                    {
+                        id: 'c9-p1',
+                        code: '01 // DEMO DOCENTE: MODELO FLASH',
+                        title: 'Tarea operativa diaria de bajo costo computacional',
+                        tool: 'Gemini',
+                        context:
+                            "Ejecutar con el selector de modelo en 'Flash'. Demuestra cómo resolver tareas rutinarias (ordenar apuntes y redactar correos breves) en segundos consumiendo apenas un 15% de coste relativo.",
+                        promptText: `Actúa como coordinador de proyectos. Convierte estos apuntes rápidos en una tabla de seguimiento con las columnas [Tarea | Responsable | Plazo] y debajo redacta un correo de 3 líneas para el equipo confirmando los compromisos:
+
+"Hoy hablamos con Sofía, ella entregará el plano eléctrico el jueves. Marcos debe cotizar las luminarias antes del martes a las 14:00. Falta que Pedro envíe el permiso municipal mañana miércoles."`,
+                    },
+                    {
+                        id: 'c9-p2',
+                        code: '02 // DEMO DOCENTE: MODELO PRO',
+                        title: 'Auditoría lógica y financiera de alta complejidad',
+                        tool: 'Gemini',
+                        context:
+                            "Cambiar el selector de modelo a 'Pro'. Demuestra cuándo sí vale la pena gastar cuota diaria de razonamiento avanzado para detectar contradicciones contractuales y hacer cálculos cruzados.",
+                        promptText: `Actúa como auditor de contratos de arquitectura. Analiza estas dos cláusulas de un proyecto, detecta qué contradicción financiera existe entre ambas y calcula el impacto económico exacto en cada escenario si la obra se atrasa 10 días hábiles sobre un presupuesto total de $20.000.000 CLP:
+
+- Cláusula 4 (Plazos): "Cualquier retraso imputable al proveedor tendrá una multa diaria del 0,5% del presupuesto total, con un tope máximo acumulable del 3%."
+- Cláusula 11 (Anexo Técnico): "En caso de demora superior a una semana calendario, el cliente descontará automáticamente un 8% fijo del valor total del contrato más $150.000 CLP por cada día hábil de atraso."`,
+                    },
+                    {
+                        id: 'c9-p3',
+                        code: '03 // DEMO DOCENTE: GOOGLE SHEETS',
+                        title: 'Limpieza de planilla sucia y generador de fórmulas exactas',
+                        tool: 'Gemini',
+                        context:
+                            "Ejecutar en 'Flash'. Normaliza registros con fechas y montos mezclados para pegarlos directo en Google Sheets y genera las fórmulas condicionales en español sin necesidad de conocer la sintaxis.",
+                        promptText: `Actúa como un experto en Google Sheets. Necesito resolver dos tareas sobre mi planilla de control de pagos:
+
+1. LIMPIEZA DE DATOS:
+Limpia estos registros desordenados, elimina filas duplicadas y entrégamelos en una tabla lista para copiar y pegar en Google Sheets con las columnas exactas: [Fecha (DD/MM/AAAA) | Nombre Cliente (Nombre Propio) | Monto CLP (Solo números sin puntos ni signos) | Estado (Pagado o Pendiente)].
+Registros crudos:
+- Fecha,Cliente,Monto,Estado
+- 2026/11/03,JUAN PEREZ SOTO,$150.000 pesos,pagado
+- 03-11-26,maria gonzalez,85000,PENDIENTE DE PAGO
+- 3 de noviembre 2026,Juan Perez Soto,$150.000,Pagado
+- nov 4 2026,CARLOS RUIZ,doscientos mil,pendiente
+- 04/11/2026,Ana Luisa Rojas,$320.000,PAGADO
+- 04-11-2026,pedro pablo tapia,95.000 pesos,Pendiente
+
+2. FÓRMULAS PARA GOOGLE SHEETS:
+Asumiendo que pegué la tabla limpia desde la fila 2 hasta la fila 100 (donde la Columna C tiene el "Monto CLP" y la Columna D tiene el "Estado"), escríbeme la fórmula exacta de Google Sheets en español (usando punto y coma como separador de argumentos) para:
+- Sumar únicamente los montos de los clientes cuyo estado sea "Pagado".
+- Mostrar automáticamente en la Columna E el texto "Enviar Cobranza" si el monto en C2 es mayor a 100000 Y el estado en D2 es "Pendiente", o mostrar "Al día" en caso contrario.`,
+                    },
+                    {
+                        id: 'c9-p4',
+                        code: '04 // TALLER SALA 1: NIVEL BÁSICO',
+                        title: 'Desafío: Semáforo de Cuotas y Fórmulas para Clínica Dental',
+                        tool: 'Gemini',
+                        context:
+                            'MISIÓN SALA BÁSICA (30 min): Copien esta plantilla base en su computador, completen los campos entre corchetes [ ] definiendo el Objetivo, Destinatario, Formato y Restricciones (O-D-F-R) junto a su equipo, y ejecútenlo en Gemini Flash para obtener la clasificación de cuotas y las fórmulas de Google Sheets.',
+                        promptText: `Actúa como [COMPLETAR ROL DEL EXPERTO].
+
+OBJETIVO:
+Necesitamos resolver dos problemas en la "Clínica Dental Sonrisa Sur": primero, clasificar en qué modelo o cuota de Gemini ejecutar 5 tareas del día sin agotar nuestra cuenta gratuita; y segundo, generar dos fórmulas para nuestra planilla de Google Sheets.
+
+DESTINATARIO:
+[INDICAR QUIÉN USARÁ ESTA RESPUESTA Y QUÉ NIVEL TÉCNICO TIENE].
+
+FORMATO DE ENTREGA:
+[INDICAR CÓMO QUIEREN VER LA RESPUESTA: TABLA, PASO A PASO, ETC.].
+
+RESTRICCIONES Y DATOS A PROCESAR:
+Parte 1 - Clasifica estas 5 tareas indicando si deben usar [Flash], [Pro], [Cuota de Imágenes] o [Investigación Profunda] y justifica por qué:
+- Tarea A: Redactar 10 mensajes cortos de WhatsApp confirmando horas médicas de mañana.
+- Tarea B: Crear 3 ilustraciones gráficas para publicar un consejo de cepillado en Instagram.
+- Tarea C: Cruzar los costos de 3 proveedores de insumos dentales con descuentos escalonados para decidir cuál comprar este trimestre.
+- Tarea D: Elaborar un estudio comparativo sobre las nuevas normativas sanitarias del Ministerio de Salud en Latinoamérica para el plan anual 2027.
+- Tarea E: Resumir un correo largo de un paciente que pide cambio de hora.
+
+Parte 2 - Nuestra planilla de Google Sheets (filas 2 a 80) tiene: Columna A (Paciente), Columna B (Tratamiento: "Limpieza", "Ortodoncia" o "Urgencia"), Columna C (Valor Cobrado en números) y Columna D (Estado: "Pagado" o "Pendiente"). Escribe las fórmulas en español con punto y coma para:
+1. [ESCRIBIR AQUÍ LA INSTRUCCIÓN PARA CONTAR PACIENTES DE ORTODONCIA].
+2. [ESCRIBIR AQUÍ LA INSTRUCCIÓN PARA SUMAR SOLO LOS MONTOS PENDIENTES].`,
+                    },
+                    {
+                        id: 'c9-p5',
+                        code: '05 // TALLER SALA 2: NIVEL INTERMEDIO',
+                        title: 'Desafío: Limpieza de Base Comercial y Cálculo de Comisiones',
+                        tool: 'Gemini',
+                        context:
+                            'MISIÓN SALA INTERMEDIA (30 min): Copien este bloque que contiene los datos sucios de ventas, completen las instrucciones faltantes entre corchetes [ ] para que Gemini Flash elimine duplicados, normalice la tabla y les entregue la fórmula condicional anidada para Google Sheets.',
+                        promptText: `Actúa como analista de operaciones comerciales experto en Google Sheets.
+
+TAREA 1 - LIMPIEZA Y NORMALIZACIÓN:
+Toma el listado de ventas desordenadas que aparece al final, [INDICAR QUÉ HACER CON LOS DUPLICADOS Y FORMATOS DE FECHA/MONTO] y entrégame una tabla limpia lista para pegar en Google Sheets con las columnas exactas:
+- Columna A: Fecha (DD/MM/AAAA)
+- Columna B: Cliente (Nombre Propio)
+- Columna C: Ciudad
+- Columna D: Monto Venta (Solo números)
+- Columna E: Estado ("Pagado" o "Pendiente")
+- Columna F: Vendedor
+
+TAREA 2 - FÓRMULA CONDICIONAL DE COMISIONES (COLUMNA G):
+Escríbeme la fórmula exacta para Google Sheets en español (usando punto y coma) para calcular la comisión en la celda G2 según estas 3 reglas simultáneas:
+1. [COMPLETAR REGLA: Si Estado en E2 es "Pagado" Y Monto en D2 >= 500000 -> calcular 6%].
+2. [COMPLETAR REGLA: Si Estado en E2 es "Pagado" pero Monto < 500000 -> calcular 3%].
+3. [COMPLETAR REGLA: Si Estado es "Pendiente" -> mostrar 0].
+
+DATOS CRUDOS A PROCESAR:
+1) "venta del 01/11/26 a ferreteria el sol (santiago) por $620.000 - factura pagada - vendedor: rodrigo"
+2) "2 de nov 2026 | Constructora Andes | Concepcion | se vendieron 450 mil pesos | pendiente | Vendedora Camila"
+3) "01-11-2026 - Ferretería El Sol de Stgo - $620.000 pagado (Rodrigo)"
+4) "03/11/2026 // Maestranza Sur // Temuco // $890.000 // PAGADO // Vendedor: Rodrigo"
+5) "4 noviembre 26, Minimarket Central (Santiago), monto: $310.000, pagado, Camila"
+6) "04/11/2026 - Cliente: Sin nombre registrado - Valdivia - $700.000 - Pendiente - Rodrigo"`,
+                    },
+                    {
+                        id: 'c9-p6',
+                        code: '06 // TALLER SALA 3: NIVEL AVANZADO',
+                        title: 'Desafío: Enrutamiento Híbrido y Simulador en Gemini Canvas',
+                        tool: 'Gemini',
+                        context:
+                            "MISIÓN SALA AVANZADA (30 min): Copien esta estructura base, completen las reglas de negocio entre corchetes [ ] y ejecútenla activando la herramienta 'Canvas' en Gemini para generar tanto el protocolo híbrido (Claude + Gemini) como el simulador interactivo de consumo de cuota.",
+                        promptText: `Actúa como Arquitecto de Soluciones de IA y Desarrollador Frontend. Nuestra consultora de 5 analistas opera exclusivamente con cuentas gratuitas de Gemini y Claude.
+
+PARTE 1 - PROTOCOLO Y FÓRMULA AVANZADA EN SHEETS:
+1. Diseña una matriz de enrutamiento que defina cuándo el equipo debe usar Gemini Flash, cuándo Gemini Pro, cuándo Investigación Profunda (cuota mensual) y cuándo cambiar a Claude (ventana móvil de 5 horas) para no bloquear ninguna cuenta durante la jornada.
+2. Escribe una fórmula avanzada de Google Sheets (usando QUERY o FILTER) que extraiga automáticamente de la hoja 'Datos!A2:F500' [ESPECIFICAR QUÉ FILAS FILTRAR SEGÚN MARGEN MENOR AL 15% Y ESTADO ACTIVO, ORDENADAS DE MAYOR A MENOR COSTO].
+
+PARTE 2 - APLICACIÓN INTERACTIVA EN GEMINI CANVAS:
+Genera en Canvas una aplicación web interactiva en un solo archivo HTML (con Tailwind CSS y JavaScript) que funcione como "Simulador de Consumo de Cuota Diaria de Gemini".
+- Inputs que debe tener la interfaz: [DEFINIR CONTROLES PARA CANTIDAD DE TAREAS EN FLASH, PRO, IMÁGENES E INVESTIGACIÓN PROFUNDA].
+- Lógica de cálculo del tablero: Basado en los costes relativos (Flash 15%, Imágenes 40%, Pro 45%, Investigación Profunda 90% mensual), muestra una barra de alerta de consumo por cada cuota independiente y recomienda automáticamente qué tareas mover a Flash o a Claude si el usuario supera el umbral seguro.`,
+                    },
+                ],
+            },
+        ],
+    },
+
     // Anexo
     {
         unitId: 'anexo-avanzado',
