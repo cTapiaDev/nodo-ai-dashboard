@@ -698,6 +698,125 @@ Genera en Canvas una aplicación web interactiva en un solo archivo HTML (con Ta
                     },
                 ],
             },
+
+            {
+                classNumber: 'Clase 10',
+                title: 'Capacidades de Gemini para el trabajo diario',
+                description:
+                    'Dominio de las herramientas multimodales y de edición de Gemini: análisis estructurado de archivos (PDF, planillas e imágenes), edición quirúrgica de documentos en Canvas, generación de imágenes con identidad de marca, uso criterioso de Gemini Live y verificación de fuentes web.',
+                guides: [
+                    'Objetivo de la clase: Extraer información precisa de archivos adjuntos, editar textos de forma quirúrgica en Canvas sin regenerar el documento completo, crear imágenes alineadas a una marca y verificar datos con búsqueda web.',
+                    "Fórmula de 3 partes para analizar archivos: Nunca subas un PDF o planilla diciendo solo 'analiza esto'. Especifica siempre: 1) Qué extraer (categorías o datos exactos), 2) Qué comparar (variaciones o reglas) y 3) Qué formato de salida necesitas (ej. tabla con alertas).",
+                    'Canvas edita, no regenera: Usa el entorno Canvas para documentos largos o textos que requieran múltiples ajustes. Permite seleccionar un párrafo puntual y modificarlo manteniendo intacto el resto del texto.',
+                    'Imágenes para uso profesional: Para evitar imágenes genéricas, la instrucción debe definir 3 elementos: Qué debe aparecer (objetos concretos), En qué estilo (paleta de colores de marca, iluminación y tono editorial) y Para qué uso o encuadre.',
+                    'Gemini Live y Búsqueda Web estándar: Usa Live (voz) como complemento cuando tengas las manos ocupadas o busques explorar ideas, nunca para formatos de alta precisión. Para datos actuales puntuales, usa la búsqueda web estándar verificando la fuente citada en menos de 2 minutos sin gastar tu cuota mensual de Investigación Profunda.',
+                ],
+                prompts: [
+                    {
+                        id: 'c10-p1',
+                        code: '01 // DEMO DOCENTE: ANÁLISIS DE ARCHIVOS',
+                        title: 'Auditoría de Gastos Comunes (El caso de Esteban resuelto)',
+                        tool: 'Gemini',
+                        context:
+                            "Demostración del Bloque 1: Aplica la estructura 'Qué extraer + Qué comparar + Qué formato' para analizar datos de una planilla de edificio sin obtener respuestas vagas.",
+                        promptText: `Actúa como Administrador Financiero de Edificios. Analiza los siguientes datos de gastos comunes de los meses de septiembre y octubre aplicando estrictamente estas 3 instrucciones:
+
+1. QUÉ EXTRAER: Calcula el gasto total agrupado por cada una de las 4 categorías (Mantención, Agua, Luz y Áreas Comunes) tanto en septiembre como en octubre.
+2. QUÉ COMPARAR: Calcula la diferencia en pesos chilenos (CLP) y la variación porcentual exacta de octubre respecto a septiembre, ítem por ítem.
+3. QUÉ FORMATO: Entrégame una tabla resumen ejecutiva para el Comité de Administración e incluye una columna de estado que marque con "[ALERTA > 15%]" cualquier ítem que haya subido más de un 15% respecto al mes anterior, redactando debajo 2 preguntas de verificación que el administrador debería hacerle a los proveedores de esos ítems críticos.`,
+                    },
+                    {
+                        id: 'c10-p2',
+                        code: '02 // DEMO DOCENTE: EDICIÓN EN CANVAS',
+                        title: 'Generación de documento base para edición quirúrgica (Caso Daniela)',
+                        tool: 'Gemini',
+                        context:
+                            "Demostración del Bloque 2: Activa el botón 'Canvas' antes de enviar este prompt. Una vez generado el documento en el panel lateral, sombrea solo el Párrafo 2 con el mouse y pídele a Gemini cambiar ese fragmento a viñetas sin regenerar el resto del texto.",
+                        promptText: `Actúa como encargado de comunicaciones de la panadería artesanal "Maison Boulangerie". Abre un documento en Canvas y redacta una nota informativa de 4 párrafos para nuestros clientes anunciando nuestra participación en la Feria Gastronómica de este fin de semana:
+
+- Párrafo 1 (Introducción): Invitación cálida destacando nuestra tradición de masa madre y horneado en piedra.
+- Párrafo 2 (Productos que llevaremos): Describe en prosa nuestras hogazas de campo, baguettes rústicas, croissants de mantequilla francesa y focaccias con romero fresco.
+- Párrafo 3 (Degustación especial): Menciona que el sábado a las 12:00 hrs abriremos una horneada en vivo con degustación gratuita de panes dulces.
+- Párrafo 4 (Datos prácticos): Stand #14 del Parque Central, abierto sábado y domingo de 10:00 a 20:00 hrs.`,
+                    },
+                    {
+                        id: 'c10-p3',
+                        code: '03 // DEMO DOCENTE: IMAGEN DE MARCA',
+                        title: 'Fotografía de producto con dirección de arte y paleta específica',
+                        tool: 'Gemini',
+                        context:
+                            "Demostración del Bloque 3: Contrasta el error de pedir 'hazme una imagen para mi panadería' frente a especificar elementos concretos, estilo visual, iluminación y paleta de colores de marca.",
+                        promptText: `Genera una imagen fotográfica profesional para el catálogo y redes sociales de una panadería artesanal siguiendo esta dirección de arte:
+
+- Elementos concretos en escena: Una hogaza grande de pan artesanal de masa madre con corteza dorada y crujiente junto a dos baguettes rústicas y un poco de harina espolvoreada sobre una tabla de madera antigua con veta visible.
+- Estilo visual e iluminación: Estilo fotografía editorial gastronómica de alta gama, iluminación natural lateral suave de mañana entrando por una ventana, poca profundidad de campo con fondo ligeramente desenfocado.
+- Paleta de colores de marca: Tonos crema, beige cálido, marrón tostado y un sutil acento en verde oliva en un paño de lino al costado sobre un fondo neutro cálido.
+- Encuadre: Toma en ángulo de 45 grados, limpia y con espacio libre en la parte superior para agregar texto promocional después.`,
+                    },
+                    {
+                        id: 'c10-p4',
+                        code: '04 // DESAFÍO SALA 1: NIVEL BÁSICO',
+                        title: "Insumos Crudos: Lanzamiento Cafetería 'Raíz Austral'",
+                        tool: 'Gemini',
+                        context:
+                            "RETO SALA BÁSICA (30 min): Aquí abajo solo tienen los apuntes desordenados del dueño de la cafetería (no es un prompt). En equipo deben: 1) Redactar desde cero un prompt O-D-F-R activando 'Canvas' para transformar estos apuntes en un comunicado de 3 secciones para clientes. 2) Usar la edición quirúrgica de Canvas para cambiar solo el párrafo de precios a formato de lista sin regenerar el resto. 3) Redactar desde cero un segundo prompt aplicando los 3 criterios de imagen (Qué aparece, Estilo/Paleta y Encuadre) para generar la foto promocional.",
+                        promptText: `APUNTES SUELTOS DEL DUEÑO DE LA CAFETERÍA (MATERIA PRIMA):
+- Nombre del local: Cafetería de especialidad "Raíz Austral" (ubicada en Barrio Italia, abre de martes a domingo de 08:30 a 20:00 hrs).
+- Identidad visual de la marca: Rústica sureña, maderas nativas, vajilla de gres artesanal, colores verde bosque, terracota cálido y crema. Luz cálida de tarde.
+- Novedad que queremos comunicar: Lanzamos la "Carta de Otoño" este viernes.
+- Productos nuevos que entran:
+  1. Latte Avellana Tostada (hecho con espresso doble y leche texturizada, vale $3.800).
+  2. Galletones de Masa Madre con chocolate amargo 70% y sal de mar ($2.900).
+  3. Tostadas en pan de campo con ricota casera, higos y miel de ulmo ($5.400).
+- Beneficio de lanzamiento: Quienes muestren este correo el viernes o sábado tienen un 2x1 en cafés filtrados entre las 15:00 y las 17:00 hrs.
+- Foto que necesitamos para Instagram: Queremos mostrar el Latte Avellana junto al galletón sobre una mesa de madera con los colores de nuestra marca.`,
+                    },
+                    {
+                        id: 'c10-p5',
+                        code: '05 // DESAFÍO SALA 2: NIVEL INTERMEDIO',
+                        title: 'Insumos Crudos: Planilla de Costos Clínicos y Verificación UF',
+                        tool: 'Gemini',
+                        context:
+                            'RETO SALA INTERMEDIA (30 min): Aquí abajo solo tienen la base de datos cruda de la clínica (si la pegan sin instrucciones, Gemini hará un análisis vago). En equipo deben redactar desde cero el prompt aplicando la fórmula de 3 partes vista en el caso de Esteban (Qué extraer por categoría, Qué comparar en $ y %, y Qué formato con alerta >15%). Además, deben redactar una instrucción que use la búsqueda web estándar para averiguar el valor de la UF de hoy, convertir el gasto total de septiembre a UF y verificar la fuente en menos de 2 minutos.',
+                        promptText: `DATOS CRUDOS DE COSTOS OPERATIVOS - CENTRO MÉDICO DEL MAULE:
+Categoria,Item,Gasto_Agosto_CLP,Gasto_Septiembre_CLP,Proveedor,Nota_Interna
+Insumos Clinicos,Guantes de nitrilo y mascarillas,380000,465000,MedImport SpA,Subida no avisada en factura #402
+Insumos Clinicos,Jeringas y gasas esteriles,290000,295000,MedImport SpA,Dentro de rango normal
+Insumos Clinicos,Alcohol gel y desinfectantes,150000,145000,LimpiaSur,Descuento por volumen
+Servicios Basicos,Electricidad y climatizacion boxes,640000,790000,CGE Distribucion,Aumento por calefaccion continua
+Servicios Basicos,Internet fibra optica dedicada,85000,85000,Telecom Empresas,Tarifa plana anual
+Soporte Externo,Servicio esterilizacion autoclave,410000,485000,BioSteril Ltda,Recargo por retiro de urgencia
+Soporte Externo,Lavanderia clinica sabanillas,220000,210000,TextilSalud,Menor rotacion de camillas`,
+                    },
+                    {
+                        id: 'c10-p6',
+                        code: '06 // DESAFÍO SALA 3: NIVEL AVANZADO',
+                        title: 'Insumos Crudos: Pliego de Licitación, Auditoría y Dirección de Arte',
+                        tool: 'Gemini',
+                        context:
+                            "RETO SALA AVANZADA (30 min): Abajo solo tienen los datos brutos de una licitación con sobrecostos ocultos y el manual de marca de la empresa. Sin usar plantillas, su equipo debe diseñar un flujo de prompts desde cero que logre: 1) Auditar la tabla detectando desviaciones >15% y montos facturados sin respaldo contractual. 2) Abrir 'Canvas' para generar el Informe de Auditoría y hacer una edición quirúrgica cambiando el tono de la cláusula de reclamo sin tocar los números. 3) Verificar con búsqueda web estándar el precio actual del Dólar Observado en Chile hoy citando fuente oficial para convertir la deuda total a USD. 4) Generar la imagen de portada del informe respetando el manual corporativo.",
+                        promptText: `EXPEDIENTE CRUDO DE LICITACIÓN TECNOLÓGICA 2026 - EMPRESA "ANDES LOGISTICS":
+
+1. TABLA DE FACTURACIÓN VS. PRESUPUESTO APROBADO:
+Partida,Proveedor,Presupuesto_Contrato_CLP,Factura_Recibida_CLP,Estado_Contrato,Observacion_Bodega
+Servidores Cloud AWS,DataNet SpA,1200000,1480000,Vigente,Cobran instancias adicionales no solicitadas
+Licencias Ciberseguridad,CiberShield,850000,850000,Vigente,Sin observaciones
+Cableado Red Bodega 2,RedesSur,950000,1190000,Vigente,Argumentan alza en precio del cobre
+Capacitacion Ciberseguridad,AulaTech,600000,630000,Vigente,Cargo extra por material impreso
+Soporte Tecnico Fin de Semana,DataNet SpA,0,560000,No existe anexo firmado,Facturan guardia de domingo no pactada
+Renovacion Routers,RedesSur,720000,710000,Vigente,Aplicaron nota de credito menor
+
+2. REGLAS INTERNAS DEL COMITÉ DE AUDITORÍA:
+- Cualquier desviación superior al 15% sobre el presupuesto de contrato, o cualquier cobro con estado "No existe anexo firmado", debe ser bloqueado de pago y marcado como "[RECHAZO INMEDIATO - EXIGIR NOTA DE CRÉDITO]".
+- El directorio en EE.UU. exige que el monto total válido a pagar y el monto total rechazado se expresen tanto en CLP como en Dólares (USD) usando el tipo de cambio oficial del día de hoy en Chile.
+
+3. MANUAL DE IDENTIDAD VISUAL DE "ANDES LOGISTICS" (Para portada del informe):
+- Rubro: Logística portuaria y transporte tecnológico en la cordillera.
+- Colores corporativos: Azul marino profundo, gris acero y acentos en naranja de seguridad.
+- Estética exigida: Fotografía corporativa minimalista y limpia, sin rostros humanos ni textos superpuestos, formato horizontal 16:9.`,
+                    },
+                ],
+            },
         ],
     },
 
