@@ -946,6 +946,130 @@ MATERIA PRIMA 2 - LOTE DE 3 SOLICITUDES EXTREMAS PARA ATACAR SU GEM (RED TEAMING
                     },
                 ],
             },
+
+            {
+                classNumber: 'Clase 12',
+                title: 'Probar y ajustar un asistente',
+                description:
+                    'Metodología de control de calidad (QA) para Gems en Gemini: diseño deliberado de matrices de prueba (normal, límite y erróneo), protocolo de testeo con usuarios externos sin sesgo, diagnóstico de las 3 causas de fallos y verificación de no-regresión.',
+                guides: [
+                    'Objetivo de la clase: Diseñar matrices de prueba con casos límite, diagnosticar la causa raíz de respuestas inesperadas (instrucción ambigua, archivo insuficiente o caso no previsto) y verificar que los ajustes no rompan funciones previas.',
+                    "El peligro del 'Camino Feliz': Quien crea un Gem tiende a probarlo solo con los casos que tenía en mente al redactarlo. Un Gem que nunca ha fallado todavía no es un Gem probado; requiere evaluar al menos un caso normal, uno límite y uno erróneo.",
+                    "Protocolo de prueba con otra persona (3 reglas): 1) Elegir a un colega del mismo rol, 2) Explicar solo lo mínimo (para qué existe el Gem, sin dictarle qué preguntar) y 3) Observar su uso real sin guiarlo (preguntar '¿te sirvió?' no reemplaza mirar qué preguntó y qué respondió el Gem).",
+                    "Diagnóstico rápido de las 3 causas frecuentes: 1) Responde algo razonable pero no lo esperado -> Instrucción ambigua (solución: dar ejemplo específico). 2) Inventa datos o dice 'aproximadamente' -> Archivo de referencia insuficiente (solución: cargar el dato o prohibir estimar). 3) Mezcla condiciones con seguridad -> Caso no previsto (solución: crear regla explícita de borde).",
+                    'Ciclo de Ajuste y Verificación (No-Regresión): 1) Identificar el fallo, 2) Aplicar el cambio y 3) Verificar repitiendo TANTO el caso que falló COMO los casos anteriores que antes funcionaban bien, evitando que el parche rompa el comportamiento normal.',
+                ],
+                prompts: [
+                    {
+                        id: 'c12-p1',
+                        code: '01 // DEMO DOCENTE: GEM DEFECTUOSO (V1.0)',
+                        title: "El Gem de Seguros de Pablo (Configurado solo para el 'Camino Feliz')",
+                        tool: 'Gemini',
+                        context:
+                            "Pegar estas instrucciones en un Gem nuevo llamado 'Asistente de Pólizas de Pablo'. Funciona bien con preguntas simples, pero carece de reglas para múltiples pólizas o coberturas fuera de tabla.",
+                        promptText: `Eres el asistente de atención a clientes de la corredora de seguros de Pablo. Responde siempre con tono seguro, rápido y ejecutivo.
+
+Tabla oficial de pólizas y coberturas:
+- Póliza Automotriz: Cubre choques y robo de accesorios. Deducible: 3 UF. Plazo de aviso: 48 horas desde el siniestro al canal telefónico 600-111-222. Código de referencia: AUTO-01.
+- Póliza Hogar: Cubre incendio y rotura de cristales. Deducible: 5 UF. Plazo de aviso: 24 horas desde el siniestro en la web www.segurospablo.cl. Código de referencia: HOG-02.
+
+Cuando te consulten por el siniestro de un cliente, indica el plazo de aviso, el canal correspondiente, el deducible y el código de referencia.`,
+                    },
+                    {
+                        id: 'c12-p2',
+                        code: '02 // DEMO DOCENTE: EL CHOQUE DE ANTONIA',
+                        title: 'Batería de pruebas (Caso Normal vs. Casos Límite de Antonia)',
+                        tool: 'Gemini',
+                        context:
+                            'Pegar este mensaje en el chat del Gem v1.0 de Pablo. Demuestra cómo la pregunta real de una colega nueva (Antonia) hace que el Gem mezcle dos pólizas e invente coberturas no registradas.',
+                        promptText: `Evalúa y responde estas dos consultas de clientes que acaban de entrar por teléfono:
+
+Consulta 1 (Caso Normal): "Hola, soy cliente de Póliza Automotriz y ayer me chocaron la puerta en un estacionamiento. ¿Qué plazo tengo para avisar, por qué canal y cuál es mi deducible?"
+
+Consulta 2 (Caso de Antonia - Dos pólizas + Cobertura fuera de tabla): "Hola, el cliente Roberto Gómez tiene contratadas con nosotros la Póliza Automotriz y la Póliza Hogar. Hoy en la mañana se rompió una matriz de agua inundando su cocina y el agua también dañó el motor de su auto estacionado en el patio. ¿En qué plazo único debe hacer el denuncio, cuánto pagará de deducible total por todo el evento y cómo activamos la cobertura de inundación por cañería?"`,
+                    },
+                    {
+                        id: 'c12-p3',
+                        code: '03 // DEMO DOCENTE: GEM REPARADO (V2.0)',
+                        title: 'El ajuste de Pablo verificado (Separación de pólizas y bloqueo de invención)',
+                        tool: 'Gemini',
+                        context:
+                            'Actualizar las instrucciones del Gem de Pablo con esta versión 2.0 y volver a probar la Consulta 1 y la Consulta 2 para verificar que se corrigió el borde sin romper el caso normal.',
+                        promptText: `1. PERSONA:
+Eres el asistente oficial de atención a siniestros de la corredora de seguros de Pablo. Tono claro, preciso y prudente.
+
+2. BASE DE CONOCIMIENTO EXCLUSIVA:
+- Póliza Automotriz (Ref: AUTO-01): Cubre exclusivamente choques y robo de accesorios. Deducible: 3 UF. Plazo máximo: 48 horas vía teléfono 600-111-222.
+- Póliza Hogar (Ref: HOG-02): Cubre exclusivamente incendio y rotura de cristales. Deducible: 5 UF. Plazo máximo: 24 horas vía web www.segurospablo.cl.
+
+3. REGLAS DE CASOS LÍMITE (PROTOCOLO DE SEGURIDAD):
+- Regla de Pólizas Múltiples (Caso no previsto): Si una consulta involucra a un cliente con dos pólizas a la vez o dos siniestros simultáneos, NUNCA mezcles ni sumes sus plazos, canales o deducibles en una sola respuesta. Antes de dar condiciones combinadas, separa la respuesta por cada póliza individual o pregunta primero a cuál de las dos pólizas desea referirse.
+- Regla de Cobertura No Listada (Archivo insuficiente): Si consultan por un daño que no aparece textualmente en la Base de Conocimiento (ej. inundación, cañerías, sismo o daño de motor por agua), declara explícitamente: "[COBERTURA NO REGISTRADA EN TABLA OFICIAL - DERIVAR A EJECUTIVO HUMANO]" y jamás asumas que está cubierto.`,
+                    },
+                    {
+                        id: 'c12-p4',
+                        code: '04 // DESAFÍO SALA 1: NIVEL BÁSICO',
+                        title: "Laboratorio QA: El Gem Defectuoso de 'Tienda ModaSur' (Retail)",
+                        tool: 'Gemini',
+                        context:
+                            "RETO SALA BÁSICA (30 min): Abajo tienen el Gem v1.0 que creó el jefe de local (quien solo probó el 'camino feliz') y 3 preguntas reales que hicieron fallar al asistente. Su misión en equipo: 1) Peguen el Gem v1.0 en su Gemini y pruébenlo con los 3 casos para observar exactamente cómo falla. 2) Diagnostiquen cuál de las 3 causas ocurre en cada fallo (Instrucción ambigua, Archivo insuficiente o Caso no previsto). 3) Redacten desde cero el Gem v2.0 corregido y verifiquen que ahora supere los 3 casos sin romper el caso normal.",
+                        promptText: `MATERIA PRIMA 1 - INSTRUCCIONES DEL GEM DEFECTUOSO V1.0 (Creado por el jefe de local):
+"Eres el asistente de cambios y devoluciones de Tienda ModaSur. Atiende bien a los clientes. Nuestra regla es que los cambios de ropa se hacen dentro de los 30 días desde la compra presentando la boleta, y si el cliente quiere devolución de su dinero solo tiene 10 días desde la compra con la prenda sin uso. Diles siempre que pasen por caja."
+
+---
+MATERIA PRIMA 2 - MATRIZ DE 3 CASOS REALES PARA PROBAR Y ROMPER EL GEM V1.0:
+- Caso 1 (Normal): "Compré una chaqueta hace 5 días, no la he usado, tengo la boleta y quiero que me devuelvan el dinero."
+- Caso 2 (Límite - Mezcla de condiciones y fuera de plazo): "Hola, compré un abrigo hace 45 días y un pantalón ayer. Quiero cambiar el abrigo por otra talla y pedir la devolución del dinero del pantalón, pero el pantalón ya lo usé hoy en la mañana y le corté la etiqueta."
+- Caso 3 (Erróneo / Vacío de datos): "Compré unos zapatos por internet con despacho a Punta Arenas, me quedaron chicos y quiero saber cuánto cuesta el envío de vuelta por correo para cambiarlos."`,
+                    },
+                    {
+                        id: 'c12-p5',
+                        code: '05 // DESAFÍO SALA 2: NIVEL INTERMEDIO',
+                        title: 'Laboratorio QA: El Gem Cotizador de Eventos de Javiera y Rutas',
+                        tool: 'Gemini',
+                        context:
+                            "RETO SALA INTERMEDIA (30 min): Abajo tienen las instrucciones del Gem v1.0 de Javiera (que inventa precios 'aproximados', mezcla salones y usa formatos ambiguos) junto con los 3 tickets que probó un colega externo. En equipo deben: 1) Ejecutar los 3 tickets sobre el Gem v1.0. 2) Construir una tabla de Diagnóstico Rápido asociando cada fallo a las 3 causas de la clase (Instrucción ambigua, Archivo insuficiente y Caso no previsto). 3) Reescribir desde cero las instrucciones del Gem v2.0 y demostrar en el plenario la prueba de verificación completa.",
+                        promptText: `MATERIA PRIMA 1 - INSTRUCCIONES DEL GEM DEFECTUOSO V1.0 DE JAVIERA:
+"Eres el cotizador oficial de 'Eventos & Banquetería Javiera'. Cuando un cliente pida presupuesto, dale una cotización completa y amable.
+Precios oficiales:
+- Salón Bosque (capacidad hasta 100 personas): $1.500.000 fijo + $25.000 por plato de cena por persona.
+- Salón Terraza (capacidad hasta 50 personas): $800.000 fijo + $20.000 por cóctel por persona.
+- Traslado de equipos de música dentro de Santiago: $120.000.
+Calcula siempre el total aproximado para ayudar al cliente a decidir rápido."
+
+---
+MATERIA PRIMA 2 - PRUEBAS REALIZADAS POR UN COLEGA EXTERNO (QUE ROMPEN EL GEM V1.0):
+- Prueba A (Dispara Causa de Archivo Insuficiente): "Hola, queremos hacer una cena de empresa para 80 personas en Viña del Mar en el 'Salón Miramar', incluyendo traslado de equipos desde Santiago. ¿Cuánto nos cuesta en total?" (Observación: el Gem v1.0 suele inventar una tarifa aproximada para Viña del Mar y para el Salón Miramar).
+- Prueba B (Dispara Causa de Caso No Previsto): "Queremos arrendar el Salón Terraza pero somos 95 invitados y queremos el plato de cena de $25.000 en vez de cóctel, y además celebrar un segundo día en el Salón Bosque para 30 personas." (Observación: supera la capacidad máxima del Salón Terraza y mezcla menús).
+- Prueba C (Dispara Causa de Instrucción Ambigua): "Dame el presupuesto para 40 personas en Salón Terraza con cóctel y traslado en Santiago." (Observación: como la instrucción dice 'cotización completa', a veces responde en un párrafo largo sin desglose, sin IVA y sin formato de tabla).`,
+                    },
+                    {
+                        id: 'c12-p6',
+                        code: '06 // DESAFÍO SALA 3: NIVEL AVANZADO',
+                        title: 'Laboratorio QA: Auditoría de Regresión en Gem de Logística y RR.HH.',
+                        tool: 'Gemini',
+                        context:
+                            "RETO SALA AVANZADA (30 min): Abajo tienen un Gem v1.0 de liquidación de rutas de transporte y un 'Parche Mal Hecho (v1.5)' que intentó aplicar un analista: al querer frenar los datos inventados, puso una regla tan rígida que ahora el Gem rechaza incluso los viajes normales válidos (error de regresión). Su equipo debe: 1) Probar los 4 casos de la matriz y documentar por qué falla la v1.0 y por qué la v1.5 rompe el caso normal. 2) Diseñar desde cero el Gem v2.0 definitivo que supere los 4 casos simultáneamente. 3) Presentar en el plenario la Bitácora de Registro de Ajustes cumpliendo las 3 condiciones previas a compartir un Gem.",
+                        promptText: `MATERIA PRIMA 1 - GEM ORIGINAL V1.0 (Con huecos de invención y mezcla):
+"Eres el liquidador de pagos a transportistas de 'Logística Andina'. Calcula cuánto pagarle al chofer según esta tabla:
+- Ruta Urbana: $1.200 por kilómetro recorrido + bono fijo de $15.000 por vuelta.
+- Ruta Carretera: $1.800 por kilómetro recorrido + reembolso de peajes con boleta.
+- Tope de seguridad: Ningún chofer puede conducir más de 400 km en un mismo día; si supera eso, pasa a auditoría de seguridad."
+
+MATERIA PRIMA 2 - EL PARCHE DEFECTUOSO V1.5 (Que rompió lo que antes funcionaba):
+El creador vio que cuando faltaban los kilómetros el Gem inventaba un promedio, así que agregó al final esta línea mal redactada:
+"REGLA ESTRICTA DE BLOQUEO: Si el mensaje del usuario no incluye el número exacto de kilómetros, el monto de los peajes pagados con número de boleta y el tipo de ruta, rechaza toda la liquidación inmediatamente sin calcular nada."
+(Problema de regresión: ahora cuando entra una Ruta Urbana normal —que NO tiene peajes—, el Gem la rechaza exigiendo boleta de peaje).
+
+---
+MATERIA PRIMA 3 - BATERÍA DE 4 PRUEBAS PARA VERIFICAR SU VERSIÓN 2.0 DEFINITIVA:
+1. Caso Normal Urbano (Debe aprobar y calcular exacto sin pedir peajes): "Chofer Pedro Soto, hizo 1 vuelta en Ruta Urbana de 85 kilómetros hoy."
+2. Caso Normal Carretera (Debe aprobar y calcular exacto): "Chofer Ana Rivas, Ruta Carretera de 250 kilómetros, adjunta boleta de peaje #9981 por $18.500."
+3. Caso Límite Combinado + Exceso de Kilometraje: "Chofer Marcos Silva, en el mismo turno de hoy hizo una Ruta Urbana de 110 km y enseguida tomó una Ruta Carretera de 340 km con $22.000 en peajes sin boleta."
+4. Caso Límite de Dato Faltante (Archivo/Input insuficiente): "Chofer Luis Vega, hizo Ruta Carretera desde Santiago hasta La Serena con $14.000 en peajes con boleta #4412. Calcula su pago." (Trampa: no indicó cuántos kilómetros recorrió; el Gem NO debe estimar la distancia Santiago-La Serena de memoria).`,
+                    },
+                ],
+            },
         ],
     },
 
