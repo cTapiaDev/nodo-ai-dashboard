@@ -1070,6 +1070,122 @@ MATERIA PRIMA 3 - BATERÍA DE 4 PRUEBAS PARA VERIFICAR SU VERSIÓN 2.0 DEFINITIV
                     },
                 ],
             },
+
+            {
+                classNumber: 'Clase 13',
+                title: 'NotebookLM: documentación propia',
+                description:
+                    'Cierre de la Unidad 3: gestión de bases documentales propias en NotebookLM sin alucinaciones externas, organización de los 100 cuadernos gratuitos, generación de tablas, mapas mentales y resúmenes de audio, y aplicación del protocolo de 3 pasos para verificar citas y excepciones ocultas.',
+                guides: [
+                    'Objetivo de la clase: Construir cuadernos temáticos en NotebookLM con documentos propios, generar formatos de síntesis (tablas, mapas y audio) y aplicar el protocolo de 3 pasos para verificar citas y detectar contexto omitido.',
+                    'Lógica restringida a las fuentes: NotebookLM solo responde con lo que figura en los archivos cargados (PDF, Google Docs, webs públicas o transcripciones de YouTube/audio). Si algo no está, lo declara en vez de inventar, pero el riesgo se desplaza a sacar citas de contexto.',
+                    'Límites gratuitos y regla de organización: La cuenta gratuita incluye hasta 100 cuadernos con 50 fuentes cada uno (mínimo recomendado: 5 fuentes por cuaderno). Crea siempre un cuaderno separado por cada tema o cliente para evitar que mezcle pasajes de distintos dominios.',
+                    'Protocolo de verificación de citas en 3 pasos: 1) Abrir la cita (clic en el número para ir al fragmento original), 2) Leer el contexto completo alrededor de la frase citada (buscando condiciones o umbrales omitidos) y 3) Verificar fuentes cruzadas dentro del mismo cuaderno.',
+                    'Síntesis vs. Fuente original y conexión con Gemini: Un resumen de audio o una tabla generada es una síntesis de apoyo, no una fuente oficial nueva. Puedes vincular tus cuadernos de NotebookLM dentro de la app de Gemini para combinar respaldo documental con edición en Canvas.',
+                ],
+                prompts: [
+                    {
+                        id: 'c13-p1',
+                        code: '01 // INSUMO DEMO DOCENTE: FUENTES PARA NOTEBOOKLM',
+                        title: 'Documentos de prueba para cargar en vivo (Casos Valentina y Legal)',
+                        tool: 'Gemini',
+                        context:
+                            "Abre notebooklm.google.com -> 'Crear nuevo' -> 'Texto copiado' y pega este bloque como fuente para ejecutar tus Demos 1 y 2 frente a la clase (recrea exactamente los ejemplos de las Diapositivas 17 y 18).",
+                        promptText: `DOCUMENTO OFICIAL 1: REGLAMENTO INTERNO DE RR.HH. (EMPRESA VALENTINA)
+- Artículo 22 (Vacaciones Legales): Todo trabajador con más de un año de servicio tendrá derecho a 15 días hábiles de feriado anual con goce íntegro de remuneraciones.
+- Artículo 24 (Permiso por Matrimonio o Acuerdo de Unión Civil): Todo trabajador que contraiga matrimonio o celebre un Acuerdo de Unión Civil tendrá derecho a 5 días hábiles continuos de permiso pagado, adicionales al feriado anual, sin requisito de antigüedad mínima en la empresa.
+- Artículo 29 (Capacitación): Las solicitudes de cursos externos deben presentarse con 20 días de anticipación a la jefatura directa.
+
+---
+DOCUMENTO OFICIAL 2: CONTRATO MARCO DE PROVEEDORES (ÁREA LEGAL)
+- Cláusula 4 (Recepción Conforme): Toda factura deberá emitirse únicamente después de firmada el acta de recepción técnica por el jefe de bodega.
+- Cláusula 7 (Plazos de Pago a Proveedores): El plazo estándar de pago de las facturas será de 30 días corridos contados desde la recepción en el portal de proveedores. No obstante lo anterior, esta regla de 30 días aplica exclusivamente para facturas cuyo monto total bruto sea igual o inferior a $10.000.000 CLP; para cualquier factura que supere dicho umbral monetario, el plazo de pago pasará automáticamente a ser de 45 días corridos previa visación del Comité Financiero.`,
+                    },
+                    {
+                        id: 'c13-p2',
+                        code: '02 // DEMO DOCENTE: PRUEBA DE NO-INVENCIÓN Y CITAS',
+                        title: 'Consulta inicial al cuaderno de Valentina (Verificación de cita simple)',
+                        tool: 'Gemini',
+                        context:
+                            'Pegar este prompt en el chat de NotebookLM una vez cargadas las fuentes de la tarjeta 01. Demuestra cómo responde citando el Artículo 24 y cómo declara que no existe información sobre bonos no cargados.',
+                        promptText: `Responde estas dos consultas basándote exclusivamente en los documentos del cuaderno:
+1. ¿Cuántos días de permiso corresponden por matrimonio y qué antigüedad mínima se exige?
+2. ¿Cuál es el monto en pesos del "Bono de Vacaciones en el Extranjero" que entrega la empresa?`,
+                    },
+                    {
+                        id: 'c13-p3',
+                        code: '03 // DEMO DOCENTE: AUDITORÍA DE CONTEXTO OMITIDO',
+                        title: 'Prompt para forzar la detección de excepciones y letra chica (Cláusula 7)',
+                        tool: 'Gemini',
+                        context:
+                            'Pegar en NotebookLM durante el Bloque 3. En lugar de hacer una pregunta simple que omita el umbral de los $10.000.000, este prompt obliga a extraer una tabla con la regla general y todas sus condiciones o excepciones.',
+                        promptText: `Analiza la Cláusula 7 sobre plazos de pago a proveedores y el Reglamento de RR.HH., y genera una Tabla de Auditoría Normativa con las siguientes columnas exactas:
+[Tema Consultado | Regla General Citada | Condición, Umbral o Excepción en el Contexto | Artículo o Cláusula Exacta].
+
+Asegúrate de no resumir ni omitir ningún tope de dinero, requisito de antigüedad o visación adicional que modifique el plazo general, e incluye un dictamen final indicando en cuántos días exactos se debe pagar una factura de $14.500.000 CLP.`,
+                    },
+                    {
+                        id: 'c13-p4',
+                        code: '04 // DESAFÍO SALA 1: NIVEL BÁSICO',
+                        title: "Fuentes Crudas: El Cuaderno de RR.HH. de 'Logística Austral'",
+                        tool: 'Gemini',
+                        context:
+                            'RETO SALA BÁSICA (30 min): Abajo NO hay un prompt; tienen 2 documentos oficiales de una empresa. En equipo deben: 1) Abrir notebooklm.google.com, crear un cuaderno nuevo y cargar estos 2 textos como fuentes separadas. 2) Redactar sus propios prompts en NotebookLM para averiguar: cuántos días corresponden por Permiso de Mudanza, cómo funciona el Bono de Teletrabajo y cómo opera el Permiso de Cumpleaños. 3) Aplicar los 3 pasos de verificación (Abrir cita, Leer contexto y Verificar fuentes cruzadas) para descubrir qué excepciones ocultas en el Documento 2 cambian las reglas del Documento 1. 4) Generar en NotebookLM una Tabla comparativa y un Mapa Mental para mostrarlos con su vocero en el plenario.',
+                        promptText: `=== COPIAR Y CARGAR COMO FUENTE 1 EN NOTEBOOKLM: "MANUAL GENERAL DE BENEFICIOS 2026" ===
+Artículo 10 - Permiso por Mudanza: Todo trabajador de Logística Austral tendrá derecho a 2 días hábiles de permiso pagado al año en caso de cambio de domicilio particular, debiendo avisar a Recursos Humanos con 7 días corridos de anticipación.
+Artículo 14 - Bono de Conectividad y Teletrabajo: La empresa pagará una asignación mensual de $40.000 CLP a los trabajadores que desempeñen sus funciones bajo modalidad de teletrabajo o híbrida para cubrir gastos de internet y electricidad.
+Artículo 18 - Tarde Libre de Cumpleaños: Los trabajadores podrán retirarse a las 13:00 horas el día de su cumpleaños sin descuento de remuneraciones.
+Artículo 21 - Reembolso Óptico: Se reembolsará hasta $80.000 CLP anuales por compra de lentes ópticos con receta médica.
+
+=== COPIAR Y CARGAR COMO FUENTE 2 EN NOTEBOOKLM: "CIRCULAR NORMATIVA N°08 - CONDICIONES Y EXCLUSIONES" ===
+Punto 1 (Alcance del Permiso por Mudanza - Art. 10): Se deja constancia de que los 2 días hábiles del Artículo 10 aplican exclusivamente cuando el traslado de domicilio se realiza hacia otra región del país. Para mudanzas dentro de la misma ciudad o comuna, el permiso autorizado será de únicamente 1 día hábil, y requiere adjuntar certificado de residencia o contrato de arriendo.
+Punto 2 (Restricción del Bono de Teletrabajo - Art. 14): La asignación de $40.000 CLP del Artículo 14 solo se devengará para trabajadores con contrato indefinido que realicen al menos 3 jornadas completas de teletrabajo a la semana. El personal a plazo fijo o que teletrabaje solo 1 o 2 días por semana no percibirá este bono.
+Punto 3 (Excepción Operativa de Cumpleaños - Art. 18): El beneficio de retiro a las 13:00 hrs no podrá ejecutarse en días viernes ni en jornadas de cierre contable mensual (días 28 al 31 de cada mes); si el cumpleaños cae en esas fechas, deberá trasladarse al martes de la semana siguiente.`,
+                    },
+                    {
+                        id: 'c13-p5',
+                        code: '05 // DESAFÍO SALA 2: NIVEL INTERMEDIO',
+                        title: 'Fuentes Crudas: El Expediente Académico de Jorge (3 Documentos)',
+                        tool: 'Gemini',
+                        context:
+                            "RETO SALA INTERMEDIA (30 min): Abajo tienen 3 documentos normativos de un instituto superior (no es un prompt). Su misión en equipo: 1) Crear un cuaderno en NotebookLM y cargar los 3 documentos como 3 fuentes independientes. 2) Resolver con respaldo de citas exactas el caso de 3 estudiantes: 'Camila' (alumna regular con 78% de asistencia que entrega el trabajo el 2 de diciembre), 'Tomás' (alumno con credencial de Evaluación Diferenciada y 65% de asistencia que entrega el 12 de diciembre) y 'Sofía' (alumna con Beca de Excelencia que reprueba un taller práctico con nota 3,8 pero tiene promedio general 6,2). 3) Redactar desde cero un prompt en NotebookLM que cruce las 3 fuentes y genere una matriz completa de reglas generales vs. excepciones ocultas. Su vocero mostrará en vivo cómo verificaron las citas.",
+                        promptText: `=== FUENTE 1 PARA NOTEBOOKLM: "PROGRAMA GENERAL DE LA ASIGNATURA (SECCIÓN 4)" ===
+Sección 4.1 - Fecha Límite de Entrega: El proyecto final de titulación deberá subirse a la plataforma impostergablemente hasta el día 30 de noviembre a las 23:59 horas. Todo trabajo entregado con posterioridad a esa fecha será calificado automáticamente con nota mínima 1,0.
+Sección 4.2 - Requisito de Asistencia y Aprobación: Para aprobar la asignatura se exige una nota final igual o superior a 4,0 y un porcentaje de asistencia mínima obligatoria del 75% a las sesiones sincrónicas.
+
+=== FUENTE 2 PARA NOTEBOOKLM: "REGLAMENTO DE EVALUACIÓN DIFERENCIADA Y TRABAJADORES" ===
+Artículo 6 - Prórroga de Entregas Finales: Aquellos estudiantes debidamente inscritos en el Registro de Evaluación Diferenciada o que acrediten jornada laboral por turnos tendrán una extensión automática de plazo para el proyecto final hasta el día 15 de diciembre a las 23:59 horas, sin penalización de nota, reemplazando la fecha de la Sección 4.1 del Programa General.
+Artículo 9 - Flexibilidad de Asistencia: Para los estudiantes acogidos a este reglamento, el requisito mínimo de asistencia del curso se reduce del 75% al 60%, siempre que entreguen la bitácora de actividades asincrónicas.
+
+=== FUENTE 3 PARA NOTEBOOKLM: "PROTOCOLO DE MANTENCIÓN DE BECAS DE EXCELENCIA" ===
+Cláusula 3 - Promedio Mínimo: Para conservar la Beca de Excelencia para el próximo semestre, el estudiante debe mantener un promedio general ponderado igual o superior a 5,8.
+Cláusula 8 - Causal de Pérdida Inmediata (Letra Chica): Sin perjuicio de cumplir con el promedio general de 5,8 indicado en la Cláusula 3, el estudiante perderá automáticamente el 100% de la beca si obtiene una calificación inferior a 4,0 en cualquier módulo catalogado como "Taller Práctico" o si registra alguna sanción del Comité de Ética.`,
+                    },
+                    {
+                        id: 'c13-p6',
+                        code: '06 // DESAFÍO SALA 3: NIVEL AVANZADO',
+                        title: 'Fuentes Crudas: Auditoría Forense de Licitación + Puente con Gemini Canvas',
+                        tool: 'Gemini',
+                        context:
+                            "RETO SALA AVANZADA (30 min): Abajo tienen 3 documentos legales y técnicos de un proyecto minero (Contrato Principal, Anexo Financiero y Acta de Terreno). Sin usar plantillas, su equipo debe: 1) Cargar las 3 fuentes por separado en un cuaderno de NotebookLM. 2) Diseñar un prompt de auditoría cruzada en NotebookLM que analice el cobro de $28.000.000 CLP que acaba de presentar la empresa contratista (por 8 días de atraso por lluvia + cambio de tuberías + factura pagadera en 15 días) y extraiga una Tabla con las citas exactas de los 3 documentos que desmienten o modifican cada cobro. 3) Llevar esos hallazgos verificados a 'Gemini Canvas' para redactar el Dictamen Jurídico-Financiero rechazando las partidas improcedentes. El vocero mostrará el cruce en NotebookLM y el documento en Canvas.",
+                        promptText: `=== FUENTE 1 PARA NOTEBOOKLM: "CONTRATO BASE DE CONSTRUCCIÓN DE PLANTA (CLÁUSULAS GENERALES)" ===
+Cláusula 5 (Plazos y Multas por Atraso): El contratista deberá entregar la obra en 90 días corridos. Por cada día de atraso se aplicará una multa de $500.000 CLP diarios. Quedan exentos de multa los atrasos provocados por "Fuerza Mayor Climática" (lluvias o nieve).
+Cláusula 7 (Condiciones de Pago): Todas las facturas de estados de pago se cancelarán a 30 días corridos desde su emisión.
+Cláusula 12 (Materiales y Tuberías): El contratista podrá sustituir materiales por equivalentes técnicos si existe quiebre de stock en el mercado nacional, cobrando hasta un 10% adicional previa notificación por correo electrónico.
+
+=== FUENTE 2 PARA NOTEBOOKLM: "ANEXO FINANCIERO Y ESPECIAL N°2 (PREVALENCIA NORMATIVA)" ===
+Artículo Primero (Jerarquía): Las disposiciones de este Anexo Especial prevalecen por sobre el Contrato Base en caso de discrepancia.
+Artículo Segundo (Precisión sobre Fuerza Mayor Climática - Modifica Cláusula 5): Se establece que en la zona sur las lluvias invernales son un evento previsible. Por tanto, la exención de multa por "Fuerza Mayor Climática" solo procederá cuando la Dirección Meteorológica decrete Alerta Roja Oficial y las precipitaciones superen los 60 mm en 24 horas; lluvias menores no suspenden el cobro de la multa diaria de $500.000 CLP.
+Artículo Tercero (Umbral de Pago - Modifica Cláusula 7): El plazo de 30 días corridos de la Cláusula 7 rige solo para facturas menores a $15.000.000 CLP. Todo estado de pago que supere los $15.000.000 CLP se pagará a 45 días corridos y requiere firma del Gerente de Operaciones.
+Artículo Cuarto (Bloqueo de Sustitución de Tuberías - Modifica Cláusula 12): Tratándose de tuberías de alta presión, queda estrictamente prohibido sustituir la marca especificada o cobrar recargos del 10% solo con aviso por correo; requiere autorización escrita firmada en el Libro de Obras por el Inspector Técnico Titular.
+
+=== FUENTE 3 PARA NOTEBOOKLM: "ACTA DE INSPECCIÓN DE TERRENO (SEMANA 12)" ===
+Registro 01: El contratista presenta factura por Estado de Pago N°4 por un total de $28.000.000 CLP exigiendo el pago en 15 días corridos.
+Registro 02: La entrega presenta 8 días de atraso. El contratista pide exención total de multas ($4.000.000 CLP) invocando "Fuerza Mayor Climática" por lluvias registradas de 18 mm diarios sin Alerta Roja decretada.
+Registro 03: En la factura el contratista incluye un recargo extra de $2.500.000 CLP (10%) por cambio de tuberías de alta presión informadas únicamente mediante un correo electrónico simple enviado a la secretaria de obra, sin firma en el Libro de Obras.`,
+                    },
+                ],
+            },
         ],
     },
 
