@@ -1189,6 +1189,149 @@ Registro 03: En la factura el contratista incluye un recargo extra de $2.500.000
         ],
     },
 
+    // Unidad 4
+    {
+        unitId: 'unidad-4',
+        unitTitle: 'Unidad 4: Responder por el resultado',
+        classes: [
+            {
+                classNumber: 'Clase 14',
+                title: 'Elegir la herramienta correcta',
+                description:
+                    'Criterio estratégico multi-plataforma: fortalezas relativas entre Claude, Gemini y NotebookLM, matriz cuantitativa de puntaje y desempate por cuota, diseño de rutinas semanales sostenibles, panorama del trabajo agéntico (Claude Cowork y Claude Code) y cálculo financiero de retorno de inversión (ROI) para planes pagos.',
+                guides: [
+                    'Objetivo de la clase: Aplicar la matriz de puntaje para elegir la plataforma óptima antes de iniciar una tarea, estructurar una rutina semanal bimodal que duplique la cuota gratuita, diferenciar el trabajo agéntico y calcular matemáticamente cuándo conviene migrar a un plan pago.',
+                    'Fortalezas complementarias (no jerárquicas): Claude destaca en documentos extensos consistentes, herramientas interactivas (Artefactos), análisis estructurado y entregables ofimáticos (Word, Excel, PDF). Gemini destaca en información actualizada con fuentes web, generación de imágenes, integración en Google Workspace y grandes volúmenes de documentación propia con citas mediante NotebookLM.',
+                    'Puntaje de elección y regla de desempate: Suma 1 punto por cada característica de la tarea en la columna de Claude o Gemini. Si hay empate (ej. 1 a 1), el criterio decisivo es la cuota disponible en ese momento, o dividir el flujo en 2 pasos (ej. generar la imagen en Gemini y maquetar el PDF en Claude).',
+                    "Panorama del Trabajo Agéntico: A diferencia de un Gem o chat tradicional, un agente decide qué herramientas usar y ejecuta la secuencia completa (1. Planificación -> 2. Ejecución -> 3. Consolidación -> 4. Revisión humana única al final). 'Claude Cowork' delega tareas sobre carpetas y archivos para perfiles que no programan; 'Claude Code' delega escritura y pruebas de software.",
+                    'Fórmula de Costo-Beneficio para Plan Pago: Evalúa el salto si alcanzas el límite gratuito >1 vez por semana, requieres agentes o necesitas coordinar un equipo. Calcula: Costo mensual de quedarse gratis = (Horas perdidas por semana x Valor de tu hora x 4 semanas) + Costo de retrabajo por usar la plataforma equivocada.',
+                ],
+                prompts: [
+                    {
+                        id: 'c14-p1',
+                        code: '01 // DEMO DOCENTE: CLAUDE VS. GEMINI',
+                        title: 'Calibración directa: El reporte semanal de Rodrigo en ambas plataformas',
+                        tool: 'Claude',
+                        context:
+                            'Pegar este mismo prompt simultáneamente en Claude y en Gemini. Permite contrastar el control de formato estructurado listo para descargar en Claude frente a la facilidad de exportación y coedición en Google Docs de Gemini.',
+                        promptText: `Actúa como Jefe de Logística de una distribuidora nacional. Con los apuntes de cierre de semana que te entrego abajo, elabora el "Reporte Ejecutivo Semanal de Despachos" listo para presentar a Gerencia General.
+
+Requisitos estrictos de estructura y formato:
+1. Encabezado formal con período evaluado, indicador global de cumplimiento a tiempo (OTIF) y resumen ejecutivo de 3 líneas.
+2. Tabla financiera comparativa con las columnas exactas: [Ruta | Viajes Realizados | Entregas a Tiempo | Costo Total CLP | Costo Promedio por Viaje CLP | Estado Operativo].
+3. Sección de "Plan de Acción Inmediato" numerada en 3 puntos concretos para corregir las rutas con atrasos.
+
+Datos de la semana (11 al 15 de noviembre de 2026):
+- Ruta Norte: 12 viajes realizados, 11 a tiempo, costo total $5.400.000 CLP.
+- Ruta Centro: 25 viajes realizados, 25 a tiempo, costo total $4.500.000 CLP.
+- Ruta Sur: 8 viajes realizados, solo 5 a tiempo por cierre de carretera en Angol, costo total $4.800.000 CLP.`,
+                    },
+                    {
+                        id: 'c14-p2',
+                        code: '02 // DEMO DOCENTE: RESOLUCIÓN DE EMPATE (FLUJO EN 2 PASOS)',
+                        title: 'El volante escolar de Tomás: Maquetación exacta en PDF/HTML tras crear imagen',
+                        tool: 'Claude',
+                        context:
+                            'Demostración del Bloque 2: Tras empatar 1 a 1 en la matriz, generamos primero la ilustración en Gemini (cuota independiente) y ejecutamos este prompt en Claude activando Artefactos para obtener el volante con formato de impresión exacto.',
+                        promptText: `Actúa como Diseñador Editorial Senior. Construye un Artefacto HTML/CSS interactivo y listo para imprimir en formato PDF tamaño A4 vertical para el volante oficial de la "Feria de Ciencias e Innovación Escolar 2026" del Colegio San Andrés.
+
+Especificaciones exactas de diseño y maquetación:
+1. Cabecera institucional en azul marino (#1E3A8A) y dorado (#F59E0B) con el título del evento, fecha (Viernes 27 de noviembre de 2026, de 09:00 a 14:00 hrs) y lugar (Gimnasio Central).
+2. Recuadro visual central con proporción 16:9 estilizado y con marcador de posición para insertar la ilustración generada en Gemini.
+3. Grilla simétrica de 3 columnas destacando las categorías de proyectos: Robótica Sustentable, Biotecnología Escolar y Astronomía Austral.
+4. Pie de página de corte con talón de inscripción recortable para apoderados y botón superior en pantalla que ejecute window.print() para exportar a PDF con márgenes exactos.`,
+                    },
+                    {
+                        id: 'c14-p3',
+                        code: '03 // DEMO DOCENTE: SIMULADOR DE PUNTAJE Y ROI PLAN PAGO',
+                        title: 'Artefacto interactivo: Matriz de Elección + Calculadora de Costo-Beneficio',
+                        tool: 'Claude',
+                        context:
+                            'Demostración del Bloque 3: Ejecutar en Claude para mostrar en vivo un tablero interactivo que calcula el puntaje de elección de plataforma y la fórmula financiera de migración a plan pago.',
+                        promptText: `Actúa como Ingeniero de Productividad y Desarrollador Frontend. Crea un Artefacto interactivo en un solo archivo HTML con Tailwind CSS que contenga dos herramientas en pestañas o paneles lado a lado:
+
+PANEL 1 - CALCULADORA DE ELECCIÓN DE PLATAFORMA (CLAUDE VS. GEMINI):
+Permite marcar con checkboxes qué características tiene la tarea:
+- Requiere archivo Word, Excel, PPT o PDF con formato exacto (+1 punto Claude).
+- Requiere una herramienta o artefacto interactivo a medida (+1 punto Claude).
+- Requiere información reciente o verificable en la web con fuentes (+1 punto Gemini).
+- Requiere generar o editar una imagen o pieza visual (+1 punto Gemini).
+- Se seguirá coeditando en tiempo real en Gmail, Docs, Drive o Sheets (+1 punto Gemini).
+- Depende de documentación propia extensa con citas verificables (+1 punto Gemini / NotebookLM).
+Muestra el marcador en vivo, declara la plataforma ganadora y, si hay empate, muestra la alerta de "Criterio de Desempate: Elegir según cuota disponible actual o dividir en Paso 1 (Gemini) y Paso 2 (Claude)".
+
+PANEL 2 - CALCULADORA DE COSTO-BENEFICIO PARA PLAN PAGO (FÓRMULA ROI):
+Incluye controles numéricos para:
+1) Horas perdidas por semana por bloqueos de cuota o retrabajo (ej. 0.75 o 3 horas).
+2) Valor de la hora de trabajo en CLP (ej. $8.000).
+3) Cantidad de personas en el equipo y check de las 3 preguntas de diagnóstico (bloqueos semanales, necesidad de agentes como Claude Cowork/Code, coordinación grupal).
+Calcula automáticamente: "Costo mensual de quedarse en plan gratuito = Horas x Valor Hora x 4 semanas" y compáralo contra una suscripción de referencia de $20.000 CLP/mes por persona, emitiendo un dictamen financiero claro.`,
+                    },
+                    {
+                        id: 'c14-p4',
+                        code: '04 // DESAFÍO SALA 1: NIVEL BÁSICO',
+                        title: 'Insumos Crudos: La Semana Caótica de Nicolás y su Estudio Creativo',
+                        tool: 'Claude',
+                        context:
+                            "RETO SALA BÁSICA (30 min): Abajo NO hay un prompt; tienen la lista de 6 pedidos reales que recibió el estudio de Nicolás para esta semana. En equipo deben: 1) Redactar desde cero un prompt (en Claude o Gemini) que evalúe cada una de las 6 tareas aplicando la Matriz de Puntaje, asignando puntos a Claude y a Gemini. 2) Identificar cuál de las 6 tareas produce un EMPATE técnico y definir cómo dividirla en Paso 1 y Paso 2. 3) Armar la 'Rutina Semanal Sostenible' de lunes a viernes para que Nicolás nunca se quede sin cuota gratuita. Elijan a 1 vocero para mostrar su matriz y calendario.",
+                        promptText: `MATERIA PRIMA - LISTADO DE 6 TAREAS SEMANALES DEL ESTUDIO DE NICOLÁS:
+
+- Tarea 1 (Urgente para el Lunes): Construir una planilla de Excel descargable con fórmulas automáticas de costos de imprenta y un contrato tipo en formato Word listo para firmar sin que se descuadre ningún margen.
+- Tarea 2 (Para el Martes): Investigar en internet qué marcas de bebidas en Chile han lanzado campañas ecológicas durante este mes de noviembre de 2026, verificando los enlaces de las noticias.
+- Tarea 3 (Para el Miércoles - ¡Ojo con el empate!): Crear el catálogo de lanzamiento de una tienda de muebles que requiere generar 4 fotografías conceptuales de sillones con estilo nórdico y, al mismo tiempo, armar una calculadora interactiva en pantalla para que el vendedor simule cuotas con tarjeta.
+- Tarea 4 (Para el Jueves): Subir los 18 manuales de identidad visual e historial de contratos en PDF de su cliente más grande para consultar qué colores y tipografías están prohibidos, exigiendo cita exacta de la página del manual sin inventar nada.
+- Tarea 5 (Para el Viernes en la mañana): Redactar un borrador de propuesta comercial que debe quedar abierto directamente en Google Docs para que Nicolás y sus 2 socios lo vayan editando y comentando juntos al mismo tiempo durante la reunión.
+- Tarea 6 (Para el Viernes en la tarde): Programar un visor interactivo de paletas de colores que funcione como aplicación web dentro del navegador para probar contrastes de letras en vivo.`,
+                    },
+                    {
+                        id: 'c14-p5',
+                        code: '05 // DESAFÍO SALA 2: NIVEL INTERMEDIO',
+                        title: "Insumos Crudos: Auditoría de Licencias, Agentes y ROI en 'Consultora Austral'",
+                        tool: 'Gemini',
+                        context:
+                            "RETO SALA INTERMEDIA (30 min): Abajo tienen el levantamiento crudo de tiempos perdidos, tarifas por hora y dolores operativos de 3 departamentos de una empresa que hoy solo usa cuentas gratuitas. Sin usar plantillas pre-hechas, su equipo debe redactar un prompt que: 1) Calcule el 'Costo Mensual de Quedarse Gratis' de cada departamento usando la fórmula oficial (Horas perdidas por semana x Valor hora x 4 semanas) + el costo de retrabajo por mala elección de plataforma. 2) Evalúe las 3 preguntas de diagnóstico para dictaminar qué departamento debe pasar a Plan Pago inmediatamente y cuál debe mantenerse en plan gratuito optimizando su rutina. 3) Determine en qué departamento se debe implementar 'Claude Cowork' vs. 'Claude Code'. Su vocero presentará la tabla financiera en el plenario.",
+                        promptText: `MATERIA PRIMA - LEVANTAMIENTO OPERATIVO DE 3 DEPARTAMENTOS (CONSULTORA AUSTRAL):
+Valor de referencia de 1 licencia paga individual: $20.000 CLP mensuales por usuario.
+
+1. DEPARTAMENTO DE OPERACIONES Y ARCHIVOS (3 administrativos - No programadores):
+- Valor hora promedio por trabajador: $7.500 CLP.
+- Situación actual: El límite de cuota gratuita se les bloquea 4 veces por semana a mitad de mañana. Cada trabajador pierde 1,5 horas a la semana esperando recarga de cuota y además pierden 1 hora adicional a la semana corrigiendo formatos de documentos que hicieron en la IA equivocada.
+- Necesidad especial: Todos los viernes deben abrir una carpeta local con 40 reportes en Word/PDF de sucursales, extraer los totales y consolidar un único informe final sin estar supervisando paso por paso.
+
+2. DEPARTAMENTO DE COMUNICACIONES INTERNAS (1 encargado):
+- Valor hora del trabajador: $9.000 CLP.
+- Situación actual: Solo se le ha agotado la cuota 1 vez en el mes porque hacía todo en Gemini Pro en vez de usar Flash o alternar con Claude. Pierde apenas 0,25 horas (15 minutos) a la semana por este motivo y trabaja solo, sin necesidad de coordinar herramientas con un equipo ni usar agentes autónomos.
+
+3. CÉLULA DE DESARROLLO DE SOFTWARE INTERNO (2 programadores):
+- Valor hora promedio por programador: $16.000 CLP.
+- Situación actual: Alcanzan el límite gratuito todos los días. Cada programador pierde 2,5 horas a la semana por interrupciones de cuota y coordinación manual de código.
+- Necesidad especial: Necesitan delegar en un agente la escritura, ejecución de tests y corrección automática de código a través de múltiples archivos de su repositorio.`,
+                    },
+                    {
+                        id: 'c14-p6',
+                        code: '06 // DESAFÍO SALA 3: NIVEL AVANZADO',
+                        title: 'Insumos Crudos: Caso Integral Tri-Plataforma (Gemini + NotebookLM + Claude)',
+                        tool: 'Claude',
+                        context:
+                            "RETO SALA AVANZADA (30 min): Nivel experto. En lugar de usar una sola IA, su equipo debe demostrar cómo orquestar un proyecto real dividiendo el trabajo en 3 plataformas según la Matriz de Decisión: PASO 1 (En Gemini): Consultar con búsqueda web el valor actual de la UF en Chile hoy e idear/generar el concepto visual del proyecto. PASO 2 (En NotebookLM o análisis estricto de fuente): Extraer con cita exacta las reglas ocultas del 'Reglamento de Licitación' adjunto abajo. PASO 3 (En Claude): Con los datos exactos de los pasos 1 y 2, construir un Artefacto interactivo de cotización y cálculo de ROI para el Directorio. El vocero mostrará los 3 pasos encadenados.",
+                        promptText: `EXPEDIENTE CRUDO PARA ORQUESTACIÓN TRI-PLATAFORMA - PROYECTO " CLÍNICA MÓVIL DEL MAULE":
+
+1. REQUERIMIENTO DE INFORMACIÓN ACTUALIZADA Y VISUAL (Para resolver en Plataforma A):
+- El directorio exige que todos los topes del proyecto se calculen con el valor real de la UF en Chile del día de hoy (18 de noviembre de 2026) verificando la fuente web, y necesitan una imagen fotográfica realista de un camión clínico dental moderno estacionado en una plaza rural del sur de Chile para la portada.
+
+2. REGLAMENTO INTERNO DE ADQUISICIONES Y MULTAS (Para auditar citas exactas sin inventar):
+- Artículo 4 (Presupuesto Base): El costo de habilitación de cada Clínica Móvil es de 1.200 UF netas.
+- Artículo 9 (Descuento por Flota): Si la compra contempla 3 o más unidades móviles en el mismo contrato, se aplica un descuento automático del 8% sobre el subtotal en UF, PERO solo si el plazo de entrega pactado supera los 60 días corridos. Si se exige entrega rápida (menos de 60 días), se pierde el descuento y se aplica un recargo de urgencia del 5%.
+- Artículo 14 (Equipos de Diagnóstico): El equipo de Rayos X portátil cuesta 180 UF adicionales por camión, pero su compra está prohibida si el camión operará en zonas sin certificación de blindaje radiológico municipal.
+
+3. ENTREGABLE INTERACTIVO Y DECISIÓN DE LICENCIAS (Para construir en Plataforma B):
+- El gerente general necesita un Simulador Interactivo en pantalla (Artefacto ejecutable) donde pueda mover la cantidad de camiones (1 a 5), el plazo de entrega (días), si la zona tiene o no certificación radiológica, y ver el costo exacto tanto en UF como en Pesos Chilenos (CLP) de hoy, junto con una pestaña que calcule cuánto ahorraría su equipo de 6 analistas (valor hora $12.000 CLP, que hoy pierden 2 horas semanales cada uno por bloqueos de cuota) si contratan licencias pagas y delegan la revisión documental a un agente.`,
+                    },
+                ],
+            },
+        ],
+    },
+
     // Anexo
     {
         unitId: 'anexo-avanzado',
