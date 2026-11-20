@@ -1329,6 +1329,158 @@ Valor de referencia de 1 licencia paga individual: $20.000 CLP mensuales por usu
                     },
                 ],
             },
+            {
+                classNumber: 'Clase 15',
+                title: 'Diagnóstico y proyecto integrado',
+                description:
+                    'Metodología rigurosa para definir un proyecto final viable y demostrable: construcción de la matriz de cobertura cualitativa y cuantitativa (Índice de Urgencia), medición de línea base con promedios y tasa de error, redacción de objetivos evaluables en 3 partes y validación de alcance realista en el plan gratuito.',
+                guides: [
+                    'Objetivo de la clase: Seleccionar una única tarea prioritaria mediante la matriz de cobertura, establecer una línea base rigurosa (promedio de 3 a 5 muestras + calidad), redactar un objetivo evaluable en 3 partes y validar su viabilidad dentro del plan gratuito.',
+                    'Matriz de cobertura e Índice de Urgencia: Cruza las tareas priorizadas de la Unidad 1 con las piezas ya construidas. Fórmula cuantitativa: Índice de urgencia = Índice de oportunidad (U1) x (1 - proporción construida). El número es una guía, no un oráculo: siempre debe leerse junto al criterio cualitativo para detectar tareas con 0% de cobertura.',
+                    'Protocolo de Línea Base confiable: Mide la tarea sin IA entre 3 y 5 veces reales, calcula el promedio (nunca tomes tu vez más rápida como punto de partida) y registra también los errores o calidad actual.',
+                    'Anatomía de un Objetivo útil (3 partes): Todo objetivo evaluable debe especificar: 1) Qué tarea exacta, 2) Qué cambio esperado (reducción de tiempo + criterio de calidad/precisión) y 3) Cómo se medirá el logro (ej. promedio en las próximas 5 ejecuciones).',
+                    'Alcance realista (Checklist de 3 condiciones): Antes de empezar, verifica: 1) ¿Existen piezas o es construible en el tiempo restante?, 2) ¿Cabe dentro de la cuota gratuita disponible? y 3) ¿Es medible con datos reales en las próximas semanas? La amplitud mata la profundidad: elige una sola tarea bien hecha.',
+                ],
+                prompts: [
+                    {
+                        id: 'c15-p1',
+                        code: '01 // DEMO DOCENTE: MATRIZ DE COBERTURA',
+                        title: 'Cálculo del Índice de Urgencia vs. Criterio Cualitativo (Caso Rodrigo)',
+                        tool: 'Claude',
+                        context:
+                            'Demostración del Bloque 1: Muestra cómo calcular la fórmula del Índice de Urgencia de Integración y por qué la lectura cualitativa (0% de cobertura) puede discrepar del número más alto al elegir un proyecto final.',
+                        promptText: `Actúa como Consultor de Gestión de Proyectos de IA. Construye la Matriz de Cobertura y calcula el Índice de Urgencia de Integración para el área de Logística de Rodrigo usando la fórmula exacta:
+Índice de Urgencia = Índice de Oportunidad (U1) x (1 - proporción de piezas ya construidas).
+
+Datos de Rodrigo:
+1. Responder correos sobre pedidos: Índice de Oportunidad 5,0 | Piezas construidas: Proyecto "Logística" en Claude (33% construido, proporción 0,33) | Vacío: Falta Gem de respuestas repetitivas.
+2. Cotizaciones de flete: Índice de Oportunidad 1,5 | Piezas construidas: Ninguna (0% construido, proporción 0,0) | Vacío: No existe ninguna pieza construida.
+3. Actualizar inventario: Índice de Oportunidad 5,0 | Piezas construidas: Reportes en Excel (33% construido, proporción 0,33) | Vacío: Cubierta parcialmente.
+4. Coordinar rutas de reparto: Prioridad baja / no prioritario | Piezas construidas: Ninguna.
+
+Entrega:
+1. Una tabla con las columnas: [Tarea | Piezas Construidas | Vacío Concreto | Índice de Oportunidad | Fórmula y Resultado Índice de Urgencia].
+2. Un análisis breve de 4 líneas explicando por qué el índice numérico y el criterio cualitativo discrepan en este caso, y por qué "Cotizaciones de flete" es la mejor candidata para demostrar un ciclo completo de integración.`,
+                    },
+                    {
+                        id: 'c15-p2',
+                        code: '02 // DEMO DOCENTE: LÍNEA BASE Y OBJETIVO EN 3 PARTES',
+                        title: 'Auditoría de mediciones reales y corrección de objetivo vago',
+                        tool: 'Gemini',
+                        context:
+                            'Demostración del Bloque 2: Procesa las 5 muestras reales de tiempo y calidad de Rodrigo, bloquea el sesgo de usar el tiempo más rápido y reescribe el objetivo mal definido en la estructura de 3 partes.',
+                        promptText: `Actúa como Auditor Metodológico de Proyectos. Evalúa la línea base y el objetivo borrador que redactó Rodrigo para su proyecto de "Cotizaciones de flete para clientes nuevos":
+
+- Muestras de sus últimas 5 cotizaciones hechas a mano sin IA: 35 min, 28 min, 32 min, 25 min y 30 min.
+- Registro de calidad manual: En 2 de las 5 cotizaciones cometió errores de cálculo que tuvo que corregir antes de enviar.
+- Objetivo borrador actual de Rodrigo: "Mejorar el proceso de cotizaciones con IA."
+
+Resuelve estos 3 puntos en orden:
+1. Calcula la Línea Base oficial (tiempo promedio exacto y tasa porcentual de error) y explica en 2 líneas por qué sería un error metodológico usar 25 minutos como línea base.
+2. Diagnostica los 3 defectos exactos que tiene su objetivo borrador actual.
+3. Reescribe el objetivo final cumpliendo las 3 partes obligatorias (Qué tarea + Qué cambio esperado en tiempo y precisión + Cómo se medirá en las próximas 5 cotizaciones) con una meta de reducir el tiempo a menos de 10 minutos.`,
+                    },
+                    {
+                        id: 'c15-p3',
+                        code: '03 // DEMO DOCENTE: VALIDADOR DE ALCANCE (ARTEFACTO)',
+                        title: 'Tablero interactivo de Diagnóstico, Línea Base y Checklist de Alcance',
+                        tool: 'Claude',
+                        context:
+                            'Demostración del Bloque 3: Ejecutar en Claude para construir un Artefacto interactivo que permite a los alumnos ingresar sus 5 tiempos reales, calcular su línea base y validar las 3 condiciones de alcance realista en el plan gratuito.',
+                        promptText: `Actúa como Diseñador de Herramientas de Gestión y Desarrollador Frontend. Crea un Artefacto interactivo en un solo archivo HTML con Tailwind CSS llamado "Validador de Proyecto Final Integrado" con 3 secciones interactivas:
+
+1. CALCULADORA DE LÍNEA BASE RIGUROSA:
+- Permite ingresar de 3 a 5 tiempos en minutos de muestras reales sin IA y la cantidad de muestras que tuvieron errores.
+- Calcula en vivo el Tiempo Promedio (Línea Base oficial), destaca en rojo cuál fue el "tiempo más rápido" con la advertencia de NO usarlo como línea base, y calcula el % de tasa de error actual.
+
+2. CONSTRUCTOR DE OBJETIVO EN 3 PARTES:
+- Campos para: Tarea exacta, Tiempo meta (min), Criterio de calidad innegociable y Cantidad de muestras futuras de verificación.
+- Genera automáticamente abajo la frase redactada del objetivo oficial lista para copiar.
+
+3. CHECKLIST DE ALCANCE REALISTA (PLAN GRATUITO):
+- 3 interruptores verificables: (A) Piezas ya existentes o construibles en el tiempo que queda, (B) Viable sin agotar la cuota gratuita de Claude/Gemini, (C) Indicador medible con datos reales en las próximas semanas.
+- Muestra un semáforo final: Verde ("Proyecto Viable y Aprobado") solo si los 3 checks están activos; Rojo ("Alerta: Riesgo de abarcar demasiado, recorta el alcance") si falta cualquiera.`,
+                    },
+                    {
+                        id: 'c15-p4',
+                        code: '04 // DESAFÍO SALA 1: NIVEL BÁSICO',
+                        title: 'Insumos Crudos: Rescatando el Proyecto de Carla (Jefa de Bodega)',
+                        tool: 'Gemini',
+                        context:
+                            'RETO SALA BÁSICA (30 min): Abajo NO hay un prompt; tienen los datos desordenados de Carla, quien quiere automatizar 4 áreas de su bodega al mismo tiempo a dos clases del cierre. En equipo deben redactar desde cero un prompt que: 1) Arme la Matriz de Cobertura de Carla y seleccione UNA sola tarea prioritaria (la que tiene 0% de cobertura). 2) Calcule la Línea Base oficial con sus 5 mediciones manuales (sin caer en el error de tomar su tiempo más rápido) y su tasa de error. 3) Reescriba su objetivo vago cumpliendo las 3 partes obligatorias (Tarea, Cambio en tiempo/calidad y Cómo medir). Elijan a 1 vocero para presentar.',
+                        promptText: `MATERIA PRIMA - SITUACIÓN ACTUAL DE CARLA (JEFA DE BODEGA):
+
+1. LAS 4 TAREAS QUE CARLA QUIERE AUTOMATIZAR A LA VEZ:
+- Tarea 1 (Control de inventario diario): Alta prioridad. Ya tiene una planilla de Google Sheets con fórmulas creadas con Gemini (cubierta parcialmente, falta solo automatizar alertas).
+- Tarea 2 (Emisión de órdenes de compra a proveedores): Alta prioridad. No ha construido ninguna pieza de IA todavía (0% de cobertura); hoy hace todo copiando códigos de productos a mano.
+- Tarea 3 (Correos de reclamo a transportistas): Prioridad media. Ya tiene un Proyecto configurado en Claude que redacta el 80% de los correos.
+- Tarea 4 (Reportes semanales de mermas): Prioridad baja. No tiene piezas construidas, pero solo ocurre una vez al mes.
+
+2. REGISTRO DE MEDICIÓN MANUAL DE LA TAREA SIN COBERTURA (Últimas 5 órdenes de compra hechas a mano):
+- Orden #1: 42 minutos (sin errores).
+- Orden #2: 38 minutos (error en código de SKU, corregido antes de enviar).
+- Orden #3: 25 minutos (su vez más rápida, pedido pequeño, sin errores).
+- Orden #4: 45 minutos (error en cantidad de cajas, corregido a tiempo).
+- Orden #5: 40 minutos (sin errores).
+
+3. OBJETIVO BORRADOR QUE ESCRIBIÓ CARLA:
+"Usar IA para mejorar todo el trabajo de la bodega y hacer las órdenes más rápido."
+(Meta deseada por Carla: bajar el tiempo a menos de 12 minutos por orden sin equivocarse en códigos SKU ni cantidades).`,
+                    },
+                    {
+                        id: 'c15-p5',
+                        code: '05 // DESAFÍO SALA 2: NIVEL INTERMEDIO',
+                        title: "Insumos Crudos: Discrepancia Cuantitativa vs. Cualitativa en 'Clínica SaludSur'",
+                        tool: 'Claude',
+                        context:
+                            'RETO SALA INTERMEDIA (30 min): Abajo tienen el levantamiento numérico y cualitativo de un centro médico. Sin usar plantillas, su equipo debe redactar un prompt desde cero que: 1) Calcule el Índice de Urgencia de Integración de las 3 tareas usando la fórmula oficial. 2) Analice la discrepancia entre el número más alto y el criterio cualitativo para justificar cuál debe ser el proyecto final (demostrar un ciclo completo en la tarea con 0 piezas). 3) Calcule la Línea Base exacta (promedio de las 5 muestras + tasa de error) descartando el sesgo de la muestra más rápida. 4) Redacte el objetivo en 3 partes y valide el Checklist de Alcance Realista en el plan gratuito. Su vocero presentará la tabla y el dictamen.',
+                        promptText: `MATERIA PRIMA - DIAGNÓSTICO OPERATIVO DE "CLÍNICA SALUDSUR":
+
+1. TAREAS PRIORIZADAS DESDE LA UNIDAD 1:
+- Tarea A (Redacción de fichas post-consulta): Índice de Oportunidad U1 = 4,5 | Avance actual: Ya tienen un Gem de Gemini funcionando para resúmenes (50% construido, proporción 0,50) | Vacío: Falta exportar formato limpio a Word.
+- Tarea B (Liquidación y cuadratura de bonos Isapre/Fonasa): Índice de Oportunidad U1 = 2,0 | Avance actual: Ninguna pieza construida (0% construido, proporción 0,0) | Vacío: Proceso 100% manual cruzando PDFs de aranceles con planillas.
+- Tarea C (Respuestas de WhatsApp para confirmación de horas): Índice de Oportunidad U1 = 5,0 | Avance actual: Ya tienen un Proyecto en Claude con plantillas aprobadas (60% construido, proporción 0,60) | Vacío: Falta agregar casos límite de reprogramación.
+
+2. MEDICIONES REALES SIN IA DE LA TAREA B (Últimas 5 liquidaciones de bonos):
+- Muestra 1: 55 minutos (con 1 error de código de prestación).
+- Muestra 2: 48 minutos (sin errores).
+- Muestra 3: 62 minutos (con 2 errores de suma en copago).
+- Muestra 4: 50 minutos (con 1 error de código de arancel).
+- Muestra 5: 35 minutos (día con pocos pacientes, la vez más rápida, sin errores).
+
+3. OBJETIVO MAL FORMULADO DEL ADMINISTRADOR:
+"Mejorar las liquidaciones de la clínica usando herramientas de IA."
+(Meta de negocio: reducir el tiempo a máximo 15 minutos con 0 errores de código de prestación, usando solo cuentas gratuitas de Gemini/NotebookLM y Claude).`,
+                    },
+                    {
+                        id: 'c15-p6',
+                        code: '06 // DESAFÍO SALA 3: NIVEL AVANZADO',
+                        title: "Insumos Crudos: Rescate de Alcance y Ficha de Proyecto en 'Estudio Legal & Finanzas'",
+                        tool: 'Claude',
+                        context:
+                            "RETO SALA AVANZADA (30 min): Abajo tienen la propuesta desbordada de un estudio jurídico-financiero que viola los límites del plan gratuito y sufre el error de 'querer resolverlo todo a la vez'. Sin usar plantillas, su equipo debe redactar un prompt desde cero en Claude que: 1) Audite la propuesta original contra el Checklist de 3 condiciones de Alcance Realista y exponga por qué fracasará tal como está. 2) Recorte el alcance a UNA sola tarea de alto impacto con 0% de cobertura, definiendo la arquitectura bimodal gratuita (NotebookLM + Claude). 3) Calcule la Línea Base oficial con las 5 muestras reales (promedio + % error) y redacte el Objetivo en 3 partes. 4) Genere en Claude un Artefacto interactivo con la 'Ficha Oficial de Proyecto Integrado' lista para presentar al directorio.",
+                        promptText: `MATERIA PRIMA - PROPUESTA INICIAL DESBORDADA DE "ESTUDIO LEGAL & FINANZAS":
+
+1. LO QUE QUIERE HACER EL SOCIO DIRECTOR EN 2 SEMANAS CON CUENTAS GRATUITAS:
+- Quiere automatizar en paralelo 3 procesos completos: (1) Revisión de contratos de arriendo comercial, (2) Contabilidad mensual de 40 clientes y (3) Campaña de marketing en redes sociales.
+- Para el punto 1, propone ejecutar 15 "Investigaciones Profundas" (Deep Research) al mes en Gemini para revisar leyes y además usar Claude Code para programar un ERP propio desde cero.
+- Su indicador de éxito propuesto es: "Que los abogados se sientan más contentos con la IA a fin de año."
+
+2. INVENTARIO REAL DE COBERTURA ACTUAL:
+- Marketing en redes sociales: Ya tienen un Gem con prompts de imágenes y Canvas (70% cubierto).
+- Contabilidad mensual: Ya tienen flujos de limpieza en Google Sheets con Gemini Flash (50% cubierto).
+- Revisión de contratos de arriendo comercial (contra normativa interna y cláusulas obligatorias): 0% cubierto, ninguna pieza construida. Índice de Oportunidad U1 = 3,5.
+
+3. MEDICIONES REALES SIN IA DE "REVISIÓN DE CONTRATOS DE ARRIENDO COMERCIAL" (Últimos 5 contratos):
+- Contrato #1: 70 minutos (se omitió verificar la cláusula de reajuste en UF).
+- Contrato #2: 58 minutos (sin errores).
+- Contrato #3: 65 minutos (sin errores).
+- Contrato #4: 42 minutos (contrato corto renovado, la vez más rápida, sin errores).
+- Contrato #5: 65 minutos (se omitió verificar la cláusula de garantía de término anticipado).
+(Meta realista del área legal: bajar el tiempo de revisión a 20 minutos o menos, con 0 omisiones de cláusulas obligatorias, verificado en los próximos 5 contratos).`,
+                    },
+                ],
+            },
         ],
     },
 
