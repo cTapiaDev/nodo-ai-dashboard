@@ -1090,7 +1090,7 @@ MATERIA PRIMA 3 - BATERÍA DE 4 PRUEBAS PARA VERIFICAR SU VERSIÓN 2.0 DEFINITIV
                         title: 'Documentos de prueba para cargar en vivo (Casos Valentina y Legal)',
                         tool: 'Gemini',
                         context:
-                            "Abre notebooklm.google.com -> 'Crear nuevo' -> 'Texto copiado' y pega este bloque como fuente para ejecutar tus Demos 1 y 2 frente a la clase (recrea exactamente los ejemplos de las Diapositivas 17 y 18).",
+                            "Abre notebooklm.google.com -> 'Crear nuevo' -> 'Texto copiado' y pega este bloque como fuente para ejecutar tus Demos 1 y 2 frente a la clase.",
                         promptText: `DOCUMENTO OFICIAL 1: REGLAMENTO INTERNO DE RR.HH. (EMPRESA VALENTINA)
 - Artículo 22 (Vacaciones Legales): Todo trabajador con más de un año de servicio tendrá derecho a 15 días hábiles de feriado anual con goce íntegro de remuneraciones.
 - Artículo 24 (Permiso por Matrimonio o Acuerdo de Unión Civil): Todo trabajador que contraiga matrimonio o celebre un Acuerdo de Unión Civil tendrá derecho a 5 días hábiles continuos de permiso pagado, adicionales al feriado anual, sin requisito de antigüedad mínima en la empresa.
@@ -1478,6 +1478,140 @@ Resuelve estos 3 puntos en orden:
 - Contrato #4: 42 minutos (contrato corto renovado, la vez más rápida, sin errores).
 - Contrato #5: 65 minutos (se omitió verificar la cláusula de garantía de término anticipado).
 (Meta realista del área legal: bajar el tiempo de revisión a 20 minutos o menos, con 0 omisiones de cláusulas obligatorias, verificado en los próximos 5 contratos).`,
+                    },
+                ],
+            },
+            {
+                classNumber: 'Clase 16',
+                title: 'Integrar las piezas en una rutina',
+                description:
+                    'Articulación de herramientas individuales (Gems, Proyectos, Artefactos y NotebookLM) en un flujo único con entradas y salidas claras, construcción de piezas faltantes mirando el conjunto, matriz de pruebas a nivel de traspasos y documentación operativa para terceros.',
+                guides: [
+                    'Objetivo de la clase: Conectar piezas ya construidas en una secuencia ordenada con traspasos explícitos, construir las piezas faltantes según el contexto del flujo, probar el conjunto completo y documentar la rutina para que cualquier tercero pueda ejecutarla.',
+                    'Flujo integrado vs. piezas sueltas: Un flujo no es una lista de herramientas que depende de la memoria; es una secuencia (Entrada clara -> Pasos conectados -> Salida definida) donde la salida de una pieza calza exactamente con la entrada que espera la siguiente.',
+                    'Construir piezas faltantes mirando el flujo: Antes de crear una pieza nueva, define qué formato exacto recibe del paso anterior y qué formato necesita entregar al paso siguiente. Una pieza bien hecha en aislamiento puede no encajar en la rutina.',
+                    'Prueba del flujo completo: Un flujo puede fallar aunque cada herramienta funcione bien por separado. Aplica la matriz (Normal, Límite y Erróneo) enfocándote en cada punto de traspaso: datos vacíos, formatos incompatibles o valores fuera de rango.',
+                    'Documentación para terceros (de dependencia a rutina): Un flujo que solo su creador entiende es una dependencia personal. Documentar qué dispara el proceso, el paso a paso de los traspasos, qué hacer si un paso falla (Plan B) y quién más sabe usarlo garantiza continuidad ante ausencias.',
+                ],
+                prompts: [
+                    {
+                        id: 'c16-p1',
+                        code: '01 // DEMO DOCENTE: DISEÑO DE TRASPASO (PASO 2 DE RODRIGO)',
+                        title: 'Gem de Recepción con bloque de salida estandarizado para Artefacto',
+                        tool: 'Gemini',
+                        context:
+                            'Demostración del Bloque 1: Muestra cómo diseñar el Gem de primera respuesta de Rodrigo para que, además de contestar al cliente, entregue un bloque de traspaso exacto (Origen, Destino, Peso, Urgencia y Zona) listo para pegar en el Artefacto de Claude sin errores manuales.',
+                        promptText: `Actúa como el Gem de Primera Respuesta de "Logística Rodrigo". Tu función es el Paso 2 de nuestro flujo de cotizaciones (recibes un mensaje desordenado del cliente y debes preparar los datos exactos para el Paso 3: Artefacto de Cálculo en Claude).
+
+Reglas del flujo y casos límite:
+1. Zona de cobertura automática: Solo Región Metropolitana, Valparaíso y Maule. Si el destino está fuera de esas 3 regiones, detén el traspaso e indica "[DERIVAR A COTIZACIÓN MANUAL - ZONA FUERA DE COBERTURA]".
+2. Datos obligatorios para el Artefacto: Origen, Destino, Peso en kilos y Nivel de Urgencia (Estándar o Express). Si falta cualquiera de los 4 datos, NO asumas valores por defecto; redacta una respuesta breve pidiendo exactamente el dato faltante.
+3. Si están los 4 datos dentro de cobertura, entrega al final una caja de texto limpia llamada "BLOQUE DE TRASPASO A CLAUDE" con el formato exacto:
+Origen: [valor] | Destino: [valor] | Zona: [Válida/Fuera de rango] | Peso_kg: [número] | Urgencia: [Estándar/Express]
+
+Mensaje entrante del cliente (Paso 1 - WhatsApp):
+"Hola buenas, necesito cotizar un flete desde nuestra bodega en Quilicura (Santiago) hasta Talca. Son 450 kilos de cajas de cerámica y necesitamos despacho Express para mañana temprano."`,
+                    },
+                    {
+                        id: 'c16-p2',
+                        code: '02 // DEMO DOCENTE: PIEZA FALTANTE (CASO CAMILA ARTESANA)',
+                        title: 'Pieza 3 en Claude: Catálogo PDF para WhatsApp desde salida de Gem',
+                        tool: 'Claude',
+                        context:
+                            'Demostración del Bloque 2: Construye la pieza que le faltaba a Camila mirando el flujo completo; recibe las descripciones exactas que generó el Gem en el Paso 2 y entrega un Artefacto HTML/PDF vertical optimizado para enviar por WhatsApp.',
+                        promptText: `Actúa como Diseñador Editorial de "Taller Artesanal Camila". Eres la Pieza 3 (final) de nuestro flujo integrado: recibes directamente las descripciones de producto que generó nuestro Gem en Gemini (Pieza 2) y debes entregar el Catálogo Semanal en formato vertical móvil listo para exportar a PDF y enviar por WhatsApp.
+
+Construye un Artefacto HTML/CSS limpio y elegante (paleta tierra, crema y verde oliva, tipografía legible en celular) que incluya:
+1. Portada compacta superior con el título "Catálogo Semanal de Piezas Únicas - Noviembre 2026" y datos de pedido por WhatsApp.
+2. Tarjetas de producto ordenadas con espacio visual estilizado para fotografía, título, descripción comercial intacta (sin inventar materiales), dimensiones y precio destacado en CLP sin decimales.
+3. Botón superior "Exportar PDF para WhatsApp" (window.print()) con estilos @media print para que no se corte ninguna tarjeta entre páginas.
+
+ENTRADA RECIBIDA DESDE EL GEM (PIEZA 2):
+- Producto 1: Cuenco de Gres Ahumado | Descripción: Hecho a mano en torno alfarero, esmalte mate tono arena resistente a altas temperaturas. Ideal para sopas o ensaladas. Medidas: 18 cm diámetro. Precio: $16.500 CLP.
+- Producto 2: Tazón Mañana Austral | Descripción: Cerámica de alta temperatura con asa ergonómica y borde rústico sin esmaltar. Capacidad 350 ml. Precio: $11.900 CLP.
+- Producto 3: Tabla de Servir en Rauli | Descripción: Madera nativa recuperada, curada con aceite de linaza y cera de abeja orgánica. Medidas: 40x20 cm. Precio: $24.000 CLP.`,
+                    },
+                    {
+                        id: 'c16-p3',
+                        code: '03 // DEMO DOCENTE: DOCUMENTACIÓN PARA TERCEROS (SOP)',
+                        title: 'Ficha Operativa de Rutina para garantizar continuidad ante ausencias',
+                        tool: 'Claude',
+                        context:
+                            'Demostración del Bloque 4: Transforma un flujo articulado en un manual de 1 página claro y accionable para que la asistente de atención pueda cubrir las vacaciones de Rodrigo sin preguntar.',
+                        promptText: `Actúa como Especialista en Documentación de Procesos Operativos. Redacta una "Ficha de Rutina Operativa para Terceros" (máximo 1 página, tono directo, formato de manual ejecutable sin jerga técnica) para que la Asistente de Atención pueda ejecutar el flujo de cotizaciones de Rodrigo durante sus vacaciones sin necesidad de llamarlo.
+
+Estructura obligatoria de la ficha:
+1. Ficha de Control: Nombre de la rutina, qué evento exacto la dispara, quién es el titular y quién es el reemplazo habilitado.
+2. Tabla del Flujo Paso a Paso (5 pasos): [Paso | Herramienta exacta | Qué entra | Acción humana / Traspaso explícito | Qué sale].
+3. Matriz de Verificación Rápida (3 casos): Cómo comprobar que el flujo no falló en caso Normal, Límite (destino fuera de zona) y Erróneo (cliente omite el peso).
+4. Protocolo de Respaldo (Plan B si un paso falla): Pasos exactos de contingencia para derivar a cotización manual y notificar a Jefatura de Logística sin detener la atención al cliente.
+
+Insumo del flujo de Rodrigo:
+- Disparador: Llega solicitud de cotización por correo o WhatsApp.
+- Paso 2: Pegar mensaje en Gem "Atención Logística" (Gemini) para validar zona y obtener los 4 datos (Origen, Destino, Peso, Urgencia).
+- Paso 3: Copiar los 4 datos del bloque de traspaso al Artefacto "Calculadora de Fletes" (Claude) para obtener el valor oficial.
+- Paso 4: Pasar el valor y los datos al Proyecto "Cotizaciones Oficiales" (Claude) para generar el PDF con membrete.
+- Paso 5: Enviar PDF al cliente.
+- Contingencia: Si el destino está fuera de la tabla o una herramienta se cae, derivar a planilla manual y avisar a Jefatura de Logística. Reemplazo oficial: Asistente de Atención.`,
+                    },
+                    {
+                        id: 'c16-p4',
+                        code: '04 // DESAFÍO SALA 1: NIVEL BÁSICO',
+                        title: 'Insumos Crudos: Articular el Flujo de Postulación Laboral sin Invenciones',
+                        tool: 'Claude',
+                        context:
+                            "RETO SALA BÁSICA (30 min): Abajo NO hay un prompt; tienen 3 piezas sueltas de una persona que postula a empleos y hoy pierde 1 hora copiando cosas sin orden. En equipo deben redactar desde cero un prompt que: 1) Articule el flujo completo en 5 pasos (Entrada -> Análisis en NotebookLM -> Redacción en Proyecto Claude -> Revisión anti-alucinación -> Salida). 2) Defina el formato exacto del traspaso entre NotebookLM y Claude (qué datos salen de uno y entran al otro). 3) Redacte las instrucciones de la pieza de 'Revisión' para asegurar que la carta nunca invente experiencia ni títulos que no existan en el CV. Elijan a 1 vocero.",
+                        promptText: `MATERIA PRIMA - PIEZAS SUELTAS DE UN POSTULANTE (SIN FLUJO DOCUMENTADO):
+
+1. PIEZAS YA EXISTENTES PERO DESCONECTADAS:
+- Pieza A (Cuaderno en NotebookLM): Contiene su CV actualizado, 4 certificados de diplomados y un documento con sus 3 proyectos reales más importantes.
+- Pieza B (Proyecto en Claude): Tiene instrucciones permanentes de tono profesional, formato de carta de presentación de máximo 180 palabras y prohibición de usar clichés.
+- Problema actual: Cada vez que ve una oferta en LinkedIn, abre las herramientas en distinto orden, copia párrafos largos de NotebookLM que desordenan a Claude, y la semana pasada casi envía una carta donde Claude asumió que tenía "certificación en SAP" cuando su CV nunca decía eso.
+
+2. OFERTA LABORAL DE PRUEBA (ENTRADA DEL FLUJO):
+"Buscamos Analista de Operaciones Comerciales (100% remoto). Requisitos: Experiencia comprobable en limpieza de bases de datos en Excel/Google Sheets, coordinación de despachos con proveedores, manejo de herramientas de IA generativa para reportes ejecutivos y deseable manejo de SAP."
+
+3. EXTRACTO REAL DEL CV EN NOTEBOOKLM:
+"Técnico en Administración con 4 años de experiencia en logística y control de inventarios. Dominio avanzado de Google Sheets y automatización de reportes con Gemini y Claude. No posee experiencia ni certificación en SAP."`,
+                    },
+                    {
+                        id: 'c16-p5',
+                        code: '05 // DESAFÍO SALA 2: NIVEL INTERMEDIO',
+                        title: "Insumos Crudos: Reparar Falla de Traspaso en Flujo de 'Clínica VetSur'",
+                        tool: 'Gemini',
+                        context:
+                            'RETO SALA INTERMEDIA (30 min): Abajo tienen el flujo de 3 piezas de una clínica veterinaria donde cada pieza funciona bien por separado, pero el conjunto falla en los traspasos ante casos reales. Sin usar plantillas, su equipo debe: 1) Diseñar la Matriz de Pruebas del flujo completo (Caso Normal, Caso Límite y Caso Erróneo) evaluando los 3 casos adjuntos. 2) Diagnosticar exactamente en qué punto de traspaso se rompe el flujo. 3) Redactar desde cero el ajuste de instrucciones para el Gem (Paso 1) y el Artefacto (Paso 2) para que el traspaso no colapse, incluyendo el protocolo de respaldo (Plan B). Su vocero mostrará la matriz y el flujo reparado.',
+                        promptText: `MATERIA PRIMA - FLUJO CON FALLA DE TRASPASO EN "CLÍNICA VETSUR":
+
+1. CONFIGURACIÓN ACTUAL DE LAS 3 PIEZAS (PROBADAS SOLO POR SEPARADO):
+- Paso 1 (Gem de Recepción WhatsApp en Gemini): Saluda al tutor de la mascota y le pregunta el nombre de la mascota y qué servicio necesita (Consulta general, Vacuna o Baño sanitario). Entrega un resumen en párrafo libre.
+- Paso 2 (Artefacto Calculador de Presupuesto en Claude): Para calcular el precio exige 3 datos obligatorios: Especie (solo Perro o Gato), Peso exacto en kilos (los precios de baño y anestesia cambian si pesa menos de 10 kg, entre 10 y 25 kg, o más de 25 kg) y Servicio. Si no recibe el peso o recibe otra especie, arroja "$0" o se queda en blanco sin avisar.
+- Paso 3 (Proyecto Presupuesto PDF en Claude): Recibe el cálculo del Artefacto y genera el PDF formal con vigencia de 7 días.
+
+2. LOS 3 CASOS REALES PARA PROBAR EL FLUJO COMPLETO:
+- Caso 1 (Normal): "Hola, quiero agendar vacuna séxtuple para mi perro Toby, es un Beagle que pesa 12 kilos."
+- Caso 2 (Límite - Dato omitido en el traspaso): "Hola, necesito presupuesto urgente de baño sanitario y corte de pelo para mi perro Max, es un pastor alemán grande." (Falla actual: el Gem no exige el peso exacto en kilos y el Artefacto devuelve $0).
+- Caso 3 (Erróneo - Fuera de rango de tabla): "Buenas tardes, tengo una iguana verde que dejó de comer y necesito cotizar una consulta general hoy." (Falla actual: el Gem toma los datos normal, pero el Artefacto solo tiene tarifas para Perro y Gato y colapsa sin indicar a quién derivar).`,
+                    },
+                    {
+                        id: 'c16-p6',
+                        code: '06 // DESAFÍO SALA 3: NIVEL AVANZADO',
+                        title: "Insumos Crudos: Pieza Faltante + Pruebas de Flujo + Manual SOP 'Academia TechSur'",
+                        tool: 'Claude',
+                        context:
+                            "RETO SALA AVANZADA (30 min): La coordinadora académica de 'Academia TechSur' sale de vacaciones en 3 días y hoy su proceso de cierre de notas depende 100% de su memoria. Su equipo debe: 1) Definir la cadena completa del flujo de 4 pasos y construir en Claude la Pieza Faltante (un Artefacto HTML imprimible a PDF de 'Boletín de Retroalimentación') diseñado para recibir el formato exacto de la pieza anterior. 2) Aplicar la Matriz de Pruebas del flujo completo con los 2 casos límite adjuntos (alumno con entrega tardía justificada y alumno sin nota en módulo 2). 3) Generar la Ficha de Documentación para Terceros (Disparador, Traspasos exactos, Plan B si falla y Reemplazo habilitado) para que el coordinador suplente opere sin preguntar. El vocero mostrará el Artefacto y el SOP.",
+                        promptText: `MATERIA PRIMA - PROCESO DE CIERRE SEMANAL DE "ACADEMIA TECHSUR" (SIN DOCUMENTAR):
+
+1. INVENTARIO DE PIEZAS ACTUALES Y PIEZA FALTANTE:
+- Pieza 1 (Ya existe - Cuaderno NotebookLM): Contiene la Rúbrica Oficial de Evaluación y el Reglamento de Entregas Tardías (regla clave: si un alumno tiene licencia médica aprobada, no se le descuenta el 20% por atraso; sin licencia, se descuenta 20%).
+- Pieza 2 (Ya existe - Gem Revisor en Gemini): Recibe el trabajo del alumno y la consulta del reglamento, y entrega una tabla con: [Nombre Alumno | Módulo | Nota Base (1.0 a 7.0) | Estado Entrega (A tiempo / Atraso con licencia / Atraso sin licencia) | Fortaleza destacada | Punto de mejora concreto].
+- Pieza 3 (PIEZA FALTANTE A CONSTRUIR EN CLAUDE): Necesitan un Artefacto en Claude que reciba esos datos de la tabla del Gem, calcule automáticamente la Nota Final aplicando el descuento del 20% solo si corresponde, y genere el "Boletín de Retroalimentación en PDF" listo para enviar al alumno.
+- Reemplazo durante vacaciones: Coordinador Suplente (Andrés Vega). Si un caso tiene error de cálculo o nota faltante, debe escalar a Dirección Académica.
+
+2. CASOS DE PRUEBA PARA TESTEAR EL FLUJO COMPLETO Y LOS TRASPASOS:
+- Alumno Normal: "Valentina Ruiz | Módulo 3 | Nota Base: 6.2 | Estado: A tiempo | Fortaleza: Excelente estructura de flujo | Mejora: Agregar caso límite en el paso 2."
+- Alumno Límite 1 (Atraso con licencia vs. sin licencia): "Matías Pérez | Módulo 3 | Nota Base: 5.5 | Estado: Atraso sin licencia | Fortaleza: Buen análisis de datos | Mejora: Entregar dentro del plazo."
+- Alumno Erróneo (Dato vacío en traspaso): "Sofía Castro | Módulo 3 | Nota Base: [SIN REGISTRO - ARCHIVO CORRUPTO] | Estado: A tiempo | Fortaleza: Pendiente | Mejora: Pendiente." (El Artefacto no debe calcular promedio ni emitir nota 0.0; debe mostrar alerta de retención de boletín y derivación a Dirección Académica).`,
                     },
                 ],
             },
